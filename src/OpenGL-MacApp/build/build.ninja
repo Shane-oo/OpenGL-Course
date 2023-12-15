@@ -51,8 +51,8 @@ build cmake_object_order_depends_target_OpenGL_MacApp: phony || CMakeFiles/OpenG
 
 build CMakeFiles/OpenGL_MacApp.dir/main.cpp.o: CXX_COMPILER__OpenGL_MacApp_unscanned_Debug /Users/shanemonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/main.cpp || cmake_object_order_depends_target_OpenGL_MacApp
   DEP_FILE = CMakeFiles/OpenGL_MacApp.dir/main.cpp.o.d
-  FLAGS = -g -std=gnu++20 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1 -fcolor-diagnostics
-  INCLUDES = -isystem /usr/local/include
+  FLAGS = -g -std=gnu++20 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1 -fcolor-diagnostics -F/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks
+  INCLUDES = -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/OpenGL_MacApp.dir
   OBJECT_FILE_DIR = CMakeFiles/OpenGL_MacApp.dir
 
@@ -64,9 +64,10 @@ build CMakeFiles/OpenGL_MacApp.dir/main.cpp.o: CXX_COMPILER__OpenGL_MacApp_unsca
 #############################################
 # Link the executable OpenGL_MacApp
 
-build OpenGL_MacApp: CXX_EXECUTABLE_LINKER__OpenGL_MacApp_Debug CMakeFiles/OpenGL_MacApp.dir/main.cpp.o | /usr/local/lib/libglfw.3.3.dylib
+build OpenGL_MacApp: CXX_EXECUTABLE_LINKER__OpenGL_MacApp_Debug CMakeFiles/OpenGL_MacApp.dir/main.cpp.o | /usr/local/lib/libglfw.3.3.dylib /usr/local/lib/libGLEW.2.2.0.dylib
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1
-  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  /usr/local/lib/libglfw.3.3.dylib  -lGLEW
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  /usr/local/lib/libglfw.3.3.dylib  /usr/local/lib/libGLEW.2.2.0.dylib  -Xlinker -framework -Xlinker OpenGL  -Xlinker -framework -Xlinker OpenGL
+  LINK_PATH = -F/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks
   OBJECT_DIR = CMakeFiles/OpenGL_MacApp.dir
   POST_BUILD = :
   PRE_LINK = :
