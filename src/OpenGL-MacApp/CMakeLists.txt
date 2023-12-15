@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(glfw3 REQUIRED)
 
 # Find GLEW package
+# https://stackoverflow.com/questions/27472813/linking-glew-with-cmake
 find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIRS})
 
 # Add your source files
 add_executable(OpenGL_MacApp main.cpp)
@@ -17,4 +19,7 @@ add_executable(OpenGL_MacApp main.cpp)
 target_link_libraries(OpenGL_MacApp PRIVATE glfw)
 
 # Link GLEW Library
-target_link_libraries(OpenGL_MacApp PRIVATE GLEW)
+target_link_libraries(OpenGL_MacApp PRIVATE GLEW::GLEW)
+
+# Link OpenGL Library
+target_link_libraries(OpenGL_MacApp PRIVATE ${OPENGL_gl_LIBRARY})
