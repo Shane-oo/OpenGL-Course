@@ -4,14 +4,22 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/mat4x4.hpp>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+// important glm::mat4 model is now glm::mat4 model(1.0f);
+// or model = glm::mat(1.0f);
+
+
 
 // Window dimensions
 const GLint WIDTH = 800;
 const GLint HEIGHT = 600;
 
 GLuint VAO, VBO, shader;
-int uniformXMove;
+int uniformModel;
 
 bool direction = true;
 float triOffset = 0.0f;
@@ -20,7 +28,7 @@ float triIncrement = 0.005f;
 
 
 // Vertex Shader
-static const char *vShader = "#version 330 \n layout (location = 0) \n in vec3 pos; \n uniform float xMove; \n void main(){ gl_Position = vec4(0.4 * pos.x + xMove, 0.4 * pos.y, pos.z, 1.0);}";
+static const char *vShader = "#version 330 \n layout (location = 0) \n in vec3 pos; \n uniform mat4 model; \n void main(){ gl_Position = model * vec4(0.4 * pos.x, 0.4 * pos.y, pos.z, 1.0);}";
 // Fragment Shader
 static const char *fShader = "#version 330 \n out vec4 colour; \n void main(){ colour = vec4(1.0, 0.0, 0.0, 1.0); }";
 
@@ -107,7 +115,7 @@ void compileShaders() {
         return;
     }
 
-    uniformXMove = glGetUniformLocation(shader, "xMove");
+    uniformModel = glGetUniformLocation(shader, "model");
 
 }
 
@@ -182,7 +190,11 @@ int main() {
         glUseProgram(shader);
 
 
-        glUniform1f(uniformXMove, triOffset);
+        glm::mat4 model(1.0f);
+        model = glm::translate(model, glm::vec3(triOffset, triOffset, 0.0f));
+
+
+        glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
