@@ -197,6 +197,14 @@
 		{
 			"isExternal" : true,
 			"path" : "/usr/local/lib/cmake/glew/CopyImportedTargetProperties.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/local/lib/cmake/glm/glmConfig-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/local/lib/cmake/glm/glmConfig.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",

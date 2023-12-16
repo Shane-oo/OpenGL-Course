@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.27"
+						"string" : "3.2"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "OpenGL_MacApp::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-OpenGL_MacApp-Debug-e7b01c3523429fbefacc.json",
+					"jsonFile" : "target-OpenGL_MacApp-Debug-be77e1568552579f67d8.json",
 					"name" : "OpenGL_MacApp",
 					"projectIndex" : 0
 				}

@@ -264,6 +264,9 @@ glew32_DIR:PATH=glew32_DIR-NOTFOUND
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/local/lib/cmake/glfw3
 
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=/usr/local/lib/cmake/glm
+
 //The directory containing a CMake configuration file for lglfw3.
 lglfw3_DIR:PATH=lglfw3_DIR-NOTFOUND
 
@@ -427,4 +430,6 @@ OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_glu_LIBRARY
 OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: glm_DIR
+glm_DIR-ADVANCED:INTERNAL=1
 

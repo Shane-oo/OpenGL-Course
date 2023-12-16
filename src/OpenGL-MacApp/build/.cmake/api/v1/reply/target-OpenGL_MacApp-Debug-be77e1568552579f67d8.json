@@ -11,6 +11,7 @@
 		"commands" : 
 		[
 			"add_executable",
+			"target_link_directories",
 			"target_link_libraries",
 			"include_directories"
 		],
@@ -26,23 +27,29 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 16,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
 				"line" : 19,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
+				"line" : 31,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
 				"line" : 22,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
+				"file" : 0,
+				"line" : 25,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
 				"file" : 0,
 				"line" : 13,
 				"parent" : 0
@@ -67,7 +74,7 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"isSystem" : true,
 					"path" : "/usr/local/include"
 				}
@@ -105,16 +112,21 @@
 				"role" : "frameworkPath"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/usr/local/lib",
-				"role" : "libraries"
+				"backtrace" : 2,
+				"fragment" : "-L/Users/shanemonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/glm",
+				"role" : "libraryPath"
 			},
 			{
-				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libglfw.3.3.dylib",
+				"fragment" : "-Wl,-rpath,/Users/shanemonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/glm -Wl,-rpath,/usr/local/lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
+				"fragment" : "/usr/local/lib/libglfw.3.3.dylib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
 				"fragment" : "/usr/local/lib/libGLEW.2.2.0.dylib",
 				"role" : "libraries"
 			},
