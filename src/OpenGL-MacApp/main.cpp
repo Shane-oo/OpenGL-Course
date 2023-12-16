@@ -26,12 +26,16 @@ float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
 float triIncrement = 0.005f;
 
+float currentAngle = 0.0f;
 
 // Vertex Shader
-static const char *vShader = "#version 330 \n layout (location = 0) \n in vec3 pos; \n uniform mat4 model; \n void main(){ gl_Position = model * vec4(0.4 * pos.x, 0.4 * pos.y, pos.z, 1.0);}";
+static const char *vShader = "#version 330 \n layout (location = 0) \n in vec3 pos; \n uniform mat4 model; \n void main(){ gl_Position = model * vec4(pos.x * 0.4, pos.y * 0.4, pos.z, 1.0);}";
 // Fragment Shader
 static const char *fShader = "#version 330 \n out vec4 colour; \n void main(){ colour = vec4(1.0, 0.0, 0.0, 1.0); }";
 
+float toRadians(float degrees) {
+    return degrees * (3.14159265f / 180.0f);
+}
 
 void createTriangle() {
     GLfloat vertices[] = {
@@ -183,6 +187,11 @@ int main() {
             direction = !direction;
         }
 
+        currentAngle += 1.0f;
+        if (currentAngle >= 360) {
+            currentAngle -= 360;
+        }
+
         // Clear window
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -191,7 +200,11 @@ int main() {
 
 
         glm::mat4 model(1.0f);
-        model = glm::translate(model, glm::vec3(triOffset, triOffset, 0.0f));
+        // translate on x-axis by triOffset
+        model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+
+        // rotate on the z axis
+        model = glm::rotate(model, toRadians(currentAngle), glm::vec3(0.0f, 0.0f, 1.0f));
 
 
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
