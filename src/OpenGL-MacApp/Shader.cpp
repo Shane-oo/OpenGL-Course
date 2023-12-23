@@ -114,11 +114,11 @@ void Shader::CreateFromFiles(const char *vertexName, const char *fragmentName) {
     CompileShader(vertexCode, fragmentCode);
 }
 
-int Shader::GetUniformProjection() {
+int Shader::GetUniformProjection() const {
     return uniformProjection;
 }
 
-int Shader::GetUniformModel() {
+int Shader::GetUniformModel() const {
     return uniformModel;
 }
 

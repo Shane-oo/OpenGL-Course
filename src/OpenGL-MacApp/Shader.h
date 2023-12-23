@@ -30,9 +30,9 @@ public:
     void CreateFromFiles(const char *vertexName, const char *fragmentName);
 
 
-    int GetUniformProjection();
+    int GetUniformProjection() const;
 
-    int GetUniformModel();
+    int GetUniformModel() const;
 
     void UseShader();
 

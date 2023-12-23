@@ -6,8 +6,31 @@
 #define OPENGL_MACAPP_GLWINDOW_H
 
 
-class GLWindow {
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
+class GLWindow {
+private:
+    GLFWwindow *mainWindow;
+    GLint width, height;
+    GLint bufferWidth, bufferHeight;
+
+public:
+    GLWindow();
+
+    GLWindow(GLint windowWidth, GLint windowHeight);
+
+    ~GLWindow();
+
+    int Initialise();
+
+    GLfloat GetBufferWidth() const;
+
+    GLfloat GetBufferHeight() const;
+
+    bool GetShouldClose();
+
+    void SwapBuffers();
 };
 
 
