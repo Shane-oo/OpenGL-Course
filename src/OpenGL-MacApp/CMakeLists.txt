@@ -16,7 +16,9 @@ include_directories(${GLEW_INCLUDE_DIRS})
 find_package(glm REQUIRED)
 
 # Add your source files
-add_executable(OpenGL_MacApp main.cpp)
+add_executable(OpenGL_MacApp main.cpp
+        Mesh.cpp
+        Mesh.h)
 
 # Link GLFW Library
 target_link_libraries(OpenGL_MacApp PRIVATE glfw)

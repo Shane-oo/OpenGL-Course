@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cmath>
+#include <vector>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -8,17 +9,19 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Mesh.h"
 
 // important glm::mat4 model is now glm::mat4 model(1.0f);
 // or model = glm::mat(1.0f);
-
 
 
 // Window dimensions
 const GLint WIDTH = 800;
 const GLint HEIGHT = 600;
 
-GLuint VAO, VBO, IBO, shader;
+std::vector<Mesh *> meshList;
+
+GLuint shader;
 int uniformModel;
 int uniformProjection;
 
@@ -60,31 +63,13 @@ void createTriangle() {
             0.0f, 1.0f, 0.0f
     };
 
-    // Generate a VAO ID.
-    glGenVertexArrays(1, &VAO);
-    // Bind the VAO with that ID
-    glBindVertexArray(VAO);
+    Mesh *obj1 = new Mesh();
+    obj1->CreateMesh(vertices, indices, 12, 12);
+    meshList.push_back(obj1);
 
-    // Generate a IBO ID
-    glGenBuffers(1, &IBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // Generate a VBO ID
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glEnableVertexAttribArray(0);
-
-    // Unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    // unbind VAO
-    glBindVertexArray(0);
+    Mesh *obj2 = new Mesh();
+    obj2->CreateMesh(vertices, indices, 12, 12);
+    meshList.push_back(obj2);
 }
 
 void addShader(GLuint program, const char *shaderCode, GLenum shaderType) {
@@ -200,7 +185,6 @@ int main() {
 
 
     createTriangle();
-    glBindVertexArray(VAO);
     compileShaders();
 
     glm::mat4 projection = glm::perspective(toRadians(45.0f), (GLfloat) bufferWidth / (GLfloat) bufferHeight, 0.1f,
@@ -243,39 +227,24 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shader);
+        // attach the projection Matrix
+        glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
         glm::mat4 model(1.0f);
         // translate on x-axis by triOffset
         model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f));
-
-        // rotate on the z-axis
-        //model = glm::rotate(model, toRadians(currentAngle), glm::vec3(0.0f, 1.0f, 0.0f));
-
         // scale
         model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        meshList[0]->RenderMesh();
 
-        // attach the projection Matrix
-        glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-
-        // bind the VAO
-        glBindVertexArray(VAO);
-
-        // bind the IBO
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-
-        // draw
-        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
-
-        // unbind the IBO
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-        // unbind the VAO
-        glBindVertexArray(0);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-triOffset, 0.5f, -2.0f));
+        model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+        glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        meshList[1]->RenderMesh();
 
         glUseProgram(0);
-
         glfwSwapBuffers(mainWindow);
     }
     return 0;
