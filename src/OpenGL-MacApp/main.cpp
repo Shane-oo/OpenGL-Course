@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Mesh.h"
+#include "Shader.h"
 
 // important glm::mat4 model is now glm::mat4 model(1.0f);
 // or model = glm::mat(1.0f);
@@ -20,10 +21,8 @@ const GLint WIDTH = 800;
 const GLint HEIGHT = 600;
 
 std::vector<Mesh *> meshList;
+std::vector<Shader> shaderList;
 
-GLuint shader;
-int uniformModel;
-int uniformProjection;
 
 bool direction = true;
 float triOffset = 0.0f;
@@ -37,17 +36,17 @@ float currentSize = 0.4f;
 float maxSize = 0.8f;
 float minSize = 0.1f;
 
-// Vertex Shader code
-static const char *vShader = "#version 330 \n layout (location = 0) in vec3 pos; \n out vec4 vCol; \n uniform mat4 model; \n uniform mat4 projection; \n void main(){ \n gl_Position = projection * model * vec4(pos, 1.0); \n vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0); \n }";
+// Vertex Shader codes
+static const char *vShader = "shader.vert.glsl";
 
 // Fragment Shader
-static const char *fShader = "#version 330 \n in vec4 vCol; \n out vec4 colour; \n void main(){ colour = vCol; }";
+static const char *fShader = "shader.frag.glsl";
 
 float toRadians(float degrees) {
     return degrees * (3.14159265f / 180.0f);
 }
 
-void createTriangle() {
+void createObjects() {
 
     unsigned int indices[] = {
             0, 3, 1,
@@ -72,67 +71,12 @@ void createTriangle() {
     meshList.push_back(obj2);
 }
 
-void addShader(GLuint program, const char *shaderCode, GLenum shaderType) {
-    GLuint theShader = glCreateShader(shaderType);
-
-    const GLchar *code[1];
-    code[0] = shaderCode;
-
-    GLint codeLength[1];
-    codeLength[0] = strlen(shaderCode);
-
-    glShaderSource(theShader, 1, code, codeLength);
-    glCompileShader(theShader);
-
-    GLint result = 0;
-    GLchar eLog[1024] = {0};
-
-
-    glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
-    if (!result) {
-        glGetShaderInfoLog(theShader, sizeof(eLog), nullptr, eLog);
-        printf("Error compiling the %d shader: '%s' \n", shaderType, eLog);
-        return;
-    }
-
-    glAttachShader(program, theShader);
+void CreateShaders() {
+    auto *shader1 = new Shader();
+    shader1->CreateFromFiles(vShader, fShader);
+    shaderList.push_back(*shader1);
 }
 
-void compileShaders() {
-    shader = glCreateProgram();
-
-    if (!shader) {
-        printf("Error creating shader program! \n");
-        return;
-    }
-
-    addShader(shader, vShader, GL_VERTEX_SHADER);
-    addShader(shader, fShader, GL_FRAGMENT_SHADER);
-
-    GLint result = 0;
-    GLchar eLog[1024] = {0};
-
-    glLinkProgram(shader);
-    glGetProgramiv(shader, GL_LINK_STATUS, &result);
-    if (!result) {
-        glGetProgramInfoLog(shader, sizeof(eLog), nullptr, eLog);
-        printf("Error linking program: '%s' \n", eLog);
-        return;
-    }
-
-    glValidateProgram(shader);
-    glGetProgramiv(shader, GL_VALIDATE_STATUS, &result);
-    if (!result) {
-        glGetProgramInfoLog(shader, sizeof(eLog), nullptr, eLog);
-        printf("Error Validating program: '%s' \n", eLog);
-        return;
-    }
-
-    printf("Compiled Successfully\n");
-
-    uniformModel = glGetUniformLocation(shader, "model");
-    uniformProjection = glGetUniformLocation(shader, "projection");
-}
 
 int main() {
 
@@ -184,14 +128,16 @@ int main() {
     glViewport(0, 0, bufferWidth, bufferHeight);
 
 
-    createTriangle();
-    compileShaders();
+    createObjects();
+    CreateShaders();
 
     glm::mat4 projection = glm::perspective(toRadians(45.0f), (GLfloat) bufferWidth / (GLfloat) bufferHeight, 0.1f,
                                             100.0f);
 
 
-// Loop until window closed
+    int uniformProjection = 0, uniformModel = 0;
+
+    // Loop until window closed
     while (!glfwWindowShouldClose(mainWindow)) {
         // Get and Handle user input events
         glfwPollEvents();
@@ -226,7 +172,10 @@ int main() {
         // clear both the colour and depth buffer bit
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glUseProgram(shader);
+        shaderList[0].UseShader();
+        uniformModel = shaderList[0].GetUniformModel();
+        uniformProjection = shaderList[0].GetUniformProjection();
+
         // attach the projection Matrix
         glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
