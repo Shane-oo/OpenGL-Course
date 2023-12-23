@@ -20,6 +20,7 @@ const GLint HEIGHT = 600;
 
 GLuint VAO, VBO, IBO, shader;
 int uniformModel;
+int uniformProjection;
 
 bool direction = true;
 float triOffset = 0.0f;
@@ -33,8 +34,9 @@ float currentSize = 0.4f;
 float maxSize = 0.8f;
 float minSize = 0.1f;
 
-// Vertex Shader
-static const char *vShader = "#version 330 \n layout (location = 0) in vec3 pos;\n out vec4 vCol; \n uniform mat4 model; \n void main(){ gl_Position = model * vec4(pos, 1.0); vCol = vec4(clamp(pos, 0.0f, 1.0f),1.0f);}";
+// Vertex Shader code
+static const char *vShader = "#version 330 \n layout (location = 0) in vec3 pos; \n out vec4 vCol; \n uniform mat4 model; \n uniform mat4 projection; \n void main(){ \n gl_Position = projection * model * vec4(pos, 1.0); \n vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0); \n }";
+
 // Fragment Shader
 static const char *fShader = "#version 330 \n in vec4 vCol; \n out vec4 colour; \n void main(){ colour = vCol; }";
 
@@ -79,10 +81,10 @@ void createTriangle() {
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
     // unbind VAO
     glBindVertexArray(0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void addShader(GLuint program, const char *shaderCode, GLenum shaderType) {
@@ -96,7 +98,6 @@ void addShader(GLuint program, const char *shaderCode, GLenum shaderType) {
 
     glShaderSource(theShader, 1, code, codeLength);
     glCompileShader(theShader);
-
 
     GLint result = 0;
     GLchar eLog[1024] = {0};
@@ -142,8 +143,10 @@ void compileShaders() {
         return;
     }
 
-    uniformModel = glGetUniformLocation(shader, "model");
+    printf("Compiled Successfully\n");
 
+    uniformModel = glGetUniformLocation(shader, "model");
+    uniformProjection = glGetUniformLocation(shader, "projection");
 }
 
 int main() {
@@ -195,10 +198,16 @@ int main() {
     // Create Viewport
     glViewport(0, 0, bufferWidth, bufferHeight);
 
+
     createTriangle();
+    glBindVertexArray(VAO);
     compileShaders();
 
-    // Loop until window closed
+    glm::mat4 projection = glm::perspective(toRadians(45.0f), (GLfloat) bufferWidth / (GLfloat) bufferHeight, 0.1f,
+                                            100.0f);
+
+
+// Loop until window closed
     while (!glfwWindowShouldClose(mainWindow)) {
         // Get and Handle user input events
         glfwPollEvents();
@@ -235,32 +244,37 @@ int main() {
 
         glUseProgram(shader);
 
-
         glm::mat4 model(1.0f);
         // translate on x-axis by triOffset
-        // model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f));
 
-        // rotate on the z axis
-        model = glm::rotate(model, toRadians(currentAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+        // rotate on the z-axis
+        //model = glm::rotate(model, toRadians(currentAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
         // scale
         model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 
-
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
-        // bind
+        // attach the projection Matrix
+        glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+
+        // bind the VAO
         glBindVertexArray(VAO);
+
+        // bind the IBO
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 
+        // draw
         glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
 
-        // unbind
+        // unbind the IBO
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        // unbind the VAO
         glBindVertexArray(0);
 
         glUseProgram(0);
-
 
         glfwSwapBuffers(mainWindow);
     }
