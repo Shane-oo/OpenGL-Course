@@ -18,7 +18,7 @@
 const GLint WIDTH = 800;
 const GLint HEIGHT = 600;
 
-GLuint VAO, VBO, shader;
+GLuint VAO, VBO, IBO, shader;
 int uniformModel;
 
 bool direction = true;
@@ -43,8 +43,17 @@ float toRadians(float degrees) {
 }
 
 void createTriangle() {
+
+    unsigned int indices[] = {
+            0, 3, 1,
+            1, 3, 2,
+            2, 3, 0,
+            0, 1, 2
+    };
+
     GLfloat vertices[] = {
             -1.0f, -1.0f, 0.0f,
+            0.0f, -1.0f, 1.0f,
             1.0f, -1.0f, 0.0f,
             0.0f, 1.0f, 0.0f
     };
@@ -53,6 +62,12 @@ void createTriangle() {
     glGenVertexArrays(1, &VAO);
     // Bind the VAO with that ID
     glBindVertexArray(VAO);
+
+    // Generate a IBO ID
+    glGenBuffers(1, &IBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
     // Generate a VBO ID
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -61,10 +76,13 @@ void createTriangle() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glEnableVertexAttribArray(0);
 
+    // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // unbind VAO
     glBindVertexArray(0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void addShader(GLuint program, const char *shaderCode, GLenum shaderType) {
@@ -171,6 +189,9 @@ int main() {
         return 1;
     }
 
+    // tell OpenGL to draw triangles over others
+    glEnable(GL_DEPTH_TEST);
+
     // Create Viewport
     glViewport(0, 0, bufferWidth, bufferHeight);
 
@@ -209,7 +230,8 @@ int main() {
 
         // Clear window
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        // clear both the colour and depth buffer bit
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shader);
 
@@ -219,7 +241,7 @@ int main() {
         // model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 
         // rotate on the z axis
-        //model = glm::rotate(model, toRadians(currentAngle), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::rotate(model, toRadians(currentAngle), glm::vec3(0.0f, 1.0f, 0.0f));
 
         // scale
         model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
@@ -227,9 +249,14 @@ int main() {
 
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
+        // bind
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 
+        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
+
+        // unbind
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
         glUseProgram(0);
