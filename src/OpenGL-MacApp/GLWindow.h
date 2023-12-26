@@ -11,14 +11,20 @@
 
 class GLWindow {
 private:
-    GLFWwindow *mainWindow;
+    GLFWwindow *main_window;
     GLint width, height;
-    GLint bufferWidth, bufferHeight;
+    GLint buffer_width, buffer_height;
+
+    bool keys[1024];
+
+    void CreateCallbacks();
+
+    static void HandleKeys(GLFWwindow *window, int key, int code, int action, int mode);
 
 public:
     GLWindow();
 
-    GLWindow(GLint windowWidth, GLint windowHeight);
+    GLWindow(GLint window_width, GLint window_height);
 
     ~GLWindow();
 

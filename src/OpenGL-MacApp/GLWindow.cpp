@@ -8,15 +8,22 @@
 GLWindow::GLWindow() {
     width = 800;
     height = 600;
+
+    for (bool &key: keys) {
+        key = false;
+    }
 }
 
-GLWindow::GLWindow(GLint windowWidth, GLint windowHeight) {
-    width = windowWidth;
-    height = windowHeight;
+GLWindow::GLWindow(GLint window_width, GLint window_height) {
+    width = window_width;
+    height = window_height;
+    for (bool &key: keys) {
+        key = false;
+    }
 }
 
 GLWindow::~GLWindow() {
-    glfwDestroyWindow(mainWindow);
+    glfwDestroyWindow(main_window);
     glfwTerminate();
 }
 
@@ -37,25 +44,28 @@ int GLWindow::Initialise() {
     // Allow forward compatibility
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    mainWindow = glfwCreateWindow(width, height, "Test Window", nullptr, nullptr);
-    if (!mainWindow) {
+    main_window = glfwCreateWindow(width, height, "Test Window", nullptr, nullptr);
+    if (!main_window) {
         printf("GLFW window creation failed");
         glfwTerminate();
         return 1;
     }
 
     // Get Buffer size information
-    glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);
+    glfwGetFramebufferSize(main_window, &buffer_width, &buffer_height);
 
     // Set context for GLEW to use
-    glfwMakeContextCurrent(mainWindow);
+    glfwMakeContextCurrent(main_window);
+
+    // Handle Key + Mouse Input
+    CreateCallbacks();
 
     // Initialise GLEW
     // Allow modern extension features
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
         printf("GLEW initialisation failed");
-        glfwDestroyWindow(mainWindow);
+        glfwDestroyWindow(main_window);
         glfwTerminate();
         return 1;
     }
@@ -64,24 +74,50 @@ int GLWindow::Initialise() {
     glEnable(GL_DEPTH_TEST);
 
     // Create Viewport
-    glViewport(0, 0, bufferWidth, bufferHeight);
+    glViewport(0, 0, buffer_width, buffer_height);
+
+    glfwSetWindowUserPointer(main_window, this);
+
+    return 0;
 }
 
 
 GLfloat GLWindow::GetBufferWidth() const {
-    return (GLfloat) bufferWidth;
+    return (GLfloat) buffer_width;
 }
 
 GLfloat GLWindow::GetBufferHeight() const {
-    return (GLfloat) bufferHeight;
+    return (GLfloat) buffer_height;
 }
 
 bool GLWindow::GetShouldClose() {
-    return glfwWindowShouldClose(mainWindow);
+    return glfwWindowShouldClose(main_window);
 }
 
 void GLWindow::SwapBuffers() {
-    glfwSwapBuffers(mainWindow);
+    glfwSwapBuffers(main_window);
 }
 
+void GLWindow::CreateCallbacks() {
+    glfwSetKeyCallback(main_window, HandleKeys);
+}
+
+// Keyboard callback
+void GLWindow::HandleKeys(GLFWwindow *window, int key, int code, int action, int mode) {
+    auto *the_window = static_cast<GLWindow *>(glfwGetWindowUserPointer(window));
+
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    }
+
+    if (key >= 0 && key < 1024) {
+        if (action == GLFW_PRESS) {
+            the_window->keys[key] = true;
+            printf("Pressed: %d\n", key);
+        } else if (action == GLFW_RELEASE) {
+            the_window->keys[key] = false;
+            printf("Released: %d\n", key);
+        }
+    }
+}
 
