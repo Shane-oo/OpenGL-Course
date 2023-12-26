@@ -12,6 +12,8 @@ GLWindow::GLWindow() {
     for (bool &key: keys) {
         key = false;
     }
+    mouse_x_change = 0.0f;
+    mouse_y_change = 0.0f;
 }
 
 GLWindow::GLWindow(GLint window_width, GLint window_height) {
@@ -20,12 +22,43 @@ GLWindow::GLWindow(GLint window_width, GLint window_height) {
     for (bool &key: keys) {
         key = false;
     }
+    mouse_x_change = 0.0f;
+    mouse_y_change = 0.0f;
 }
 
 GLWindow::~GLWindow() {
     glfwDestroyWindow(main_window);
     glfwTerminate();
 }
+
+GLfloat GLWindow::GetBufferWidth() const {
+    return (GLfloat) buffer_width;
+}
+
+GLfloat GLWindow::GetBufferHeight() const {
+    return (GLfloat) buffer_height;
+}
+
+bool GLWindow::GetShouldClose() {
+    return glfwWindowShouldClose(main_window);
+}
+
+bool *GLWindow::GetKeys() {
+    return keys;
+}
+
+double GLWindow::GetMouseXChange() {
+    double change = mouse_x_change;
+    mouse_x_change = 0.0f; // reset
+    return change;
+}
+
+double GLWindow::GetMouseYChange() {
+    double change = mouse_y_change;
+    mouse_y_change = 0.0f; // reset
+    return change;
+}
+
 
 int GLWindow::Initialise() {
     // Initialise GLFW
@@ -59,6 +92,8 @@ int GLWindow::Initialise() {
 
     // Handle Key + Mouse Input
     CreateCallbacks();
+    // Lock Cursor to window
+    glfwSetInputMode(main_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Initialise GLEW
     // Allow modern extension features
@@ -82,24 +117,13 @@ int GLWindow::Initialise() {
 }
 
 
-GLfloat GLWindow::GetBufferWidth() const {
-    return (GLfloat) buffer_width;
-}
-
-GLfloat GLWindow::GetBufferHeight() const {
-    return (GLfloat) buffer_height;
-}
-
-bool GLWindow::GetShouldClose() {
-    return glfwWindowShouldClose(main_window);
-}
-
 void GLWindow::SwapBuffers() {
     glfwSwapBuffers(main_window);
 }
 
 void GLWindow::CreateCallbacks() {
     glfwSetKeyCallback(main_window, HandleKeys);
+    glfwSetCursorPosCallback(main_window, HandleMouse);
 }
 
 // Keyboard callback
@@ -113,11 +137,31 @@ void GLWindow::HandleKeys(GLFWwindow *window, int key, int code, int action, int
     if (key >= 0 && key < 1024) {
         if (action == GLFW_PRESS) {
             the_window->keys[key] = true;
-            printf("Pressed: %d\n", key);
         } else if (action == GLFW_RELEASE) {
             the_window->keys[key] = false;
-            printf("Released: %d\n", key);
         }
     }
 }
+
+void GLWindow::HandleMouse(GLFWwindow *window, double x_position, double y_position) {
+    auto *the_window = static_cast<GLWindow *>(glfwGetWindowUserPointer(window));
+
+    if (the_window->mouse_first_moved) {
+        SetMousePositions(the_window, x_position, y_position);
+        the_window->mouse_first_moved = false;
+    }
+
+    the_window->mouse_x_change = x_position - the_window->mouse_last_x;
+    the_window->mouse_y_change = the_window->mouse_last_y - y_position; // not inverted
+
+    SetMousePositions(the_window, x_position, y_position);
+}
+
+void GLWindow::SetMousePositions(GLWindow *the_window, double x, double y) {
+    the_window->mouse_last_x = x;
+    the_window->mouse_last_y = y;
+}
+
+
+
 

@@ -16,10 +16,19 @@ private:
     GLint buffer_width, buffer_height;
 
     bool keys[1024];
+    double mouse_last_x;
+    double mouse_last_y;
+    double mouse_x_change;
+    double mouse_y_change;
+    bool mouse_first_moved;
 
     void CreateCallbacks();
 
     static void HandleKeys(GLFWwindow *window, int key, int code, int action, int mode);
+
+    static void HandleMouse(GLFWwindow *window, double x_position, double y_position);
+
+    static void SetMousePositions(GLWindow *the_window, double x, double y);
 
 public:
     GLWindow();
@@ -28,13 +37,19 @@ public:
 
     ~GLWindow();
 
-    int Initialise();
-
     GLfloat GetBufferWidth() const;
 
     GLfloat GetBufferHeight() const;
 
     bool GetShouldClose();
+
+    bool *GetKeys();
+
+    double GetMouseXChange();
+
+    double GetMouseYChange();
+
+    int Initialise();
 
     void SwapBuffers();
 };
