@@ -25,7 +25,9 @@ add_executable(OpenGL_MacApp
         Shader.cpp
         Shader.h
         GLWindow.cpp
-        GLWindow.h)
+        GLWindow.h
+        Camera.cpp
+        Camera.h)
 
 # Copy the Shaders folder to the build and binary directory
 add_custom_target(

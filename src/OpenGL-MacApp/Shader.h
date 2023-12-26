@@ -11,28 +11,29 @@
 
 class Shader {
 private:
-    GLuint shaderID;
-    int uniformProjection, uniformModel;
+    GLuint shader_ID;
+    int uniform_projection, uniform_model, uniform_view;
 
     void CompileShader(const char *vShader, const char *fShader);
 
     void AddShader(GLuint program, const char *shaderCode, GLenum shaderType);
 
-    static std::string ReadFile(const char* shaderName);
+    static std::string ReadFile(const char *shaderName);
 
 public:
     Shader();
 
     ~Shader();
 
-    void CreateFromString(const char *vertexCode, const char *fragmentCode);
-
-    void CreateFromFiles(const char *vertexName, const char *fragmentName);
-
-
     int GetUniformProjection() const;
 
     int GetUniformModel() const;
+
+    int GetUniformView() const;
+
+    void CreateFromString(const char *vertexCode, const char *fragmentCode);
+
+    void CreateFromFiles(const char *vertexName, const char *fragmentName);
 
     void UseShader();
 
