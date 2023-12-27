@@ -78,7 +78,7 @@ void CreateCamera() {
     GLfloat start_yaw = -90.0f;
     GLfloat start_pitch = 0.0f;
     GLfloat start_movement_speed = 5.0f;
-    GLfloat start_turn_speed = 1.0f;
+    GLfloat start_turn_speed = 0.5f;
 
     camera = Camera(start_position, start_up, start_yaw, start_pitch, start_movement_speed, start_turn_speed);
 }
@@ -109,6 +109,7 @@ int main() {
         glfwPollEvents();
 
         camera.KeyControl(mainWindow.GetKeys(), delta_time);
+        camera.MouseControl(mainWindow.GetMouseXChange(), mainWindow.GetMouseYChange());
 
         // Clear window
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

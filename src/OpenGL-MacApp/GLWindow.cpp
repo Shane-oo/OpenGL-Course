@@ -47,16 +47,16 @@ bool *GLWindow::GetKeys() {
     return keys;
 }
 
-double GLWindow::GetMouseXChange() {
+GLfloat GLWindow::GetMouseXChange() {
     double change = mouse_x_change;
     mouse_x_change = 0.0f; // reset
-    return change;
+    return (GLfloat) change;
 }
 
-double GLWindow::GetMouseYChange() {
+GLfloat GLWindow::GetMouseYChange() {
     double change = mouse_y_change;
     mouse_y_change = 0.0f; // reset
-    return change;
+    return (GLfloat) change;
 }
 
 
@@ -146,9 +146,9 @@ void GLWindow::HandleKeys(GLFWwindow *window, int key, int code, int action, int
 void GLWindow::HandleMouse(GLFWwindow *window, double x_position, double y_position) {
     auto *the_window = static_cast<GLWindow *>(glfwGetWindowUserPointer(window));
 
-    if (the_window->mouse_first_moved) {
+    if (!the_window->mouse_first_moved) {
         SetMousePositions(the_window, x_position, y_position);
-        the_window->mouse_first_moved = false;
+        the_window->mouse_first_moved = true;
     }
 
     the_window->mouse_x_change = x_position - the_window->mouse_last_x;

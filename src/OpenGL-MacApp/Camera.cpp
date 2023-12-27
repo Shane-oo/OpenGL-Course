@@ -19,7 +19,7 @@ Camera::Camera(glm::vec3 start_position, glm::vec3 start_up, GLfloat start_yaw, 
     world_up = start_up;
     yaw = start_yaw;
     pitch = start_pitch;
-    front = glm::vec3(0.0f, 0.0f, 0.0f);
+    front = glm::vec3(0.0f, 0.0f, -1.0f);
 
     movement_speed = start_movement_speed;
     turn_speed = start_turn_speed;
@@ -61,5 +61,23 @@ void Camera::KeyControl(const bool *keys, double delta_time) {
 
 glm::mat4 Camera::CalculateViewMatrix() {
     return glm::lookAt(position, position + front, up);
+}
+
+void Camera::MouseControl(GLfloat x_change, GLfloat y_change) {
+    x_change *= turn_speed;
+    y_change *= turn_speed;
+
+    yaw += x_change;
+    pitch += y_change;
+
+    if (pitch > 89.0f) {
+        pitch = 89.0f;
+    }
+
+    if (pitch < -89.0f) {
+        pitch = -89.0f;
+    }
+
+    Update();
 }
 

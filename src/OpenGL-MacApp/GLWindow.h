@@ -45,9 +45,9 @@ public:
 
     bool *GetKeys();
 
-    double GetMouseXChange();
+    GLfloat GetMouseXChange();
 
-    double GetMouseYChange();
+    GLfloat GetMouseYChange();
 
     int Initialise();
 

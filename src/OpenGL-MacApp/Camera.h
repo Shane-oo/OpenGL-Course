@@ -27,6 +27,7 @@ private:
 
 public:
     Camera();
+
     Camera(glm::vec3 start_position, glm::vec3 start_up, GLfloat start_yaw, GLfloat start_pitch,
            GLfloat start_movement_speed, GLfloat start_turn_speed);
 
@@ -35,6 +36,8 @@ public:
     void KeyControl(const bool *keys, double delta_time);
 
     glm::mat4 CalculateViewMatrix();
+
+    void MouseControl(GLfloat x_change, GLfloat y_change);
 };
 
 
