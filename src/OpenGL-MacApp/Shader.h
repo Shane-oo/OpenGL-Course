@@ -12,7 +12,7 @@
 class Shader {
 private:
     GLuint shader_ID;
-    int uniform_projection, uniform_model, uniform_view;
+    int uniform_projection, uniform_model, uniform_view, uniform_ambient_intensity, uniform_ambient_colour;
 
     void CompileShader(const char *vShader, const char *fShader);
 
@@ -30,6 +30,10 @@ public:
     int GetUniformModel() const;
 
     int GetUniformView() const;
+
+    int GetUniformAmbientIntensity() const;
+
+    int GetUniformAmbientColour() const;
 
     void CreateFromString(const char *vertexCode, const char *fragmentCode);
 

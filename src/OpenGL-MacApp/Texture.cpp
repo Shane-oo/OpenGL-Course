@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 #include "Texture.h"
 
-#include "SingleFileLibaries/stb_image.h"
+#include "Resources/SingleFileLibaries/stb_image.h"
 
 Texture::Texture() {
     texture_Id = 0;
