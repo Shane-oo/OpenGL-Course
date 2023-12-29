@@ -11,12 +11,12 @@ std::string Shader::ReadFile(const char *shaderName) {
     std::string content;
 
     // Prefix "Shaders" to shaderName
-    std::string shaderLocation = "Shaders/" + std::string(shaderName);
+    std::string shaderLocation = "Resources/Shaders/" + std::string(shaderName);
 
     std::ifstream fileStream(shaderLocation, std::ios::in);
 
     if (!fileStream.is_open()) {
-        printf("Failed to read %s! File doesn't exist", shaderLocation.c_str());
+        printf("Failed to read %s File doesn't exist", shaderLocation.c_str());
         return "";
     }
 

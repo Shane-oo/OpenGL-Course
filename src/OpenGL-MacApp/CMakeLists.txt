@@ -27,16 +27,20 @@ add_executable(OpenGL_MacApp
         GLWindow.cpp
         GLWindow.h
         Camera.cpp
-        Camera.h)
+        Camera.h
+        Texture.cpp
+        Texture.h)
 
-# Copy the Shaders folder to the build and binary directory
+# Copy the Resources folder to the build and binary directory
 add_custom_target(
         copy_resources ALL
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${PROJECT_SOURCE_DIR}/Shaders
-        ${PROJECT_BINARY_DIR}/Shaders
-        COMMENT "Copying Shaders into binary directory")
+        ${PROJECT_SOURCE_DIR}/Resources
+        ${PROJECT_BINARY_DIR}/Resources
+        COMMENT "Copying Resources into binary directory")
+
 add_dependencies(OpenGL_MacApp copy_resources)
+
 
 # Link GLFW Library
 target_link_libraries(OpenGL_MacApp PRIVATE glfw)

@@ -41,8 +41,13 @@ void Mesh::CreateMesh(GLfloat *vertices, unsigned int *indices, unsigned int num
                  vertices,
                  GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    // Position vertices
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 5, nullptr);
     glEnableVertexAttribArray(0);
+
+    // Texture UV vertices
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 5, (void *) (sizeof(vertices[0]) * 3));
+    glEnableVertexAttribArray(1);
 
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
