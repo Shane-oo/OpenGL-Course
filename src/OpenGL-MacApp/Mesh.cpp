@@ -37,7 +37,7 @@ void Mesh::CreateMesh(GLfloat *vertices, unsigned int *indices, unsigned int num
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     glBufferData(GL_ARRAY_BUFFER,
-                 static_cast<GLsizeiptr>(sizeof(indices[0]) * numOfIndices),
+                 static_cast<GLsizeiptr>(sizeof(vertices[0]) * numOfVertices),
                  vertices,
                  GL_STATIC_DRAW);
 
