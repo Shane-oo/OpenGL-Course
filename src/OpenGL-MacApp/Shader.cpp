@@ -91,6 +91,8 @@ void Shader::CompileShader(const char *vShader, const char *fShader) {
     uniform_view = glGetUniformLocation(shader_ID, "view");
     uniform_ambient_colour = glGetUniformLocation(shader_ID, "directional_light.colour");
     uniform_ambient_intensity = glGetUniformLocation(shader_ID, "directional_light.ambient_intensity");
+    uniform_diffuse_intensity = glGetUniformLocation(shader_ID, "directional_light.diffuse_intensity");
+    uniform_direction = glGetUniformLocation(shader_ID, "directional_light.direction");
 
 }
 
@@ -124,6 +126,14 @@ int Shader::GetUniformAmbientIntensity() const {
 
 int Shader::GetUniformAmbientColour() const {
     return uniform_ambient_colour;
+}
+
+int Shader::GetUniformDiffuseIntensity() const {
+    return uniform_diffuse_intensity;
+}
+
+int Shader::GetUniformDirection() const {
+    return uniform_direction;
 }
 
 

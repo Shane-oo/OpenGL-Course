@@ -25,7 +25,7 @@ std::vector<Shader *> shader_list;
 Texture brick_texture;
 Texture dirt_texture;
 
-Light ambient_light;
+Light main_light;
 
 double delta_time = 0.0f;
 double last_time = 0.0f;
@@ -46,6 +46,51 @@ void CalculateDeltaTime() {
     last_time = now;
 }
 
+void CalcAverageNormals(const unsigned int *indices, unsigned int indicesCount, float *vertices,
+                        unsigned int verticesCount, unsigned int vertexLength, unsigned int normalOffset) {
+    for (size_t i = 0; i < indicesCount; i += 3) {
+        unsigned int in0 = indices[i] * vertexLength;
+        unsigned int in1 = indices[i + 1] * vertexLength;
+        unsigned int in2 = indices[i + 2] * vertexLength;
+
+        glm::vec3 v1(vertices[in1] - vertices[in0],
+                     vertices[in1 + 1] - vertices[in0 + 1],
+                     vertices[in1 + 2] - vertices[in0 + 2]);
+        glm::vec3 v2(vertices[in2] - vertices[in0],
+                     vertices[in2 + 1] - vertices[in0 + 1],
+                     vertices[in2 + 2] - vertices[in0 + 2]);
+
+        glm::vec3 normal = glm::cross(v1, v2);
+        normal = glm::normalize(normal);
+
+        in0 += normalOffset;
+        in1 += normalOffset;
+        in2 += normalOffset;
+
+        vertices[in0] += normal.x;
+        vertices[in0 + 1] += normal.y;
+        vertices[in0 + 2] += normal.z;
+
+        vertices[in1] += normal.x;
+        vertices[in1 + 1] += normal.y;
+        vertices[in1 + 2] += normal.z;
+
+        vertices[in2] += normal.x;
+        vertices[in2 + 1] += normal.y;
+        vertices[in2 + 2] += normal.z;
+    }
+
+    // normalize normals
+    for (size_t i = 0; i < verticesCount / vertexLength; i++) {
+        unsigned int nOffset = i * vertexLength + normalOffset;
+        glm::vec3 vec(vertices[nOffset], vertices[nOffset + 1], vertices[nOffset + 2]);
+        vec = glm::normalize(vec);
+        vertices[nOffset] = vec.x;
+        vertices[nOffset + 1] = vec.y;
+        vertices[nOffset + 2] = vec.z;
+    }
+}
+
 void CreateObjects() {
 
     unsigned int indices[] = {
@@ -56,19 +101,21 @@ void CreateObjects() {
     };
 
     GLfloat vertices[] = {
-            // x        y           z           u       v
-            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, -1.0f, 1.0f, 0.5f, 0.0f,
-            1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 0.5f, 1.0f
+            // x        y           z           u       v       normals(x,y,z)
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, -1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+            1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f
     };
 
+    CalcAverageNormals(indices, 12, vertices, 32, 8, 5);
+
     Mesh *obj1 = new Mesh();
-    obj1->CreateMesh(vertices, indices, 20, 12);
+    obj1->CreateMesh(vertices, indices, 32, 12);
     mesh_list.push_back(obj1);
 
     Mesh *obj2 = new Mesh();
-    obj2->CreateMesh(vertices, indices, 20, 12);
+    obj2->CreateMesh(vertices, indices, 32, 12);
     mesh_list.push_back(obj2);
 }
 
@@ -101,8 +148,15 @@ void CreateLights() {
     GLfloat red = 1.0f;
     GLfloat green = 1.0f;
     GLfloat blue = 1.0f;
-    GLfloat intensity = 0.2f;
-    ambient_light = Light(red, green, blue, intensity);
+    GLfloat ambient_intensity = 0.2f;
+
+    GLfloat x_direction = 2.0f;
+    GLfloat y_direction = -1.0f;
+    GLfloat z_direction = -2.0f;
+    GLfloat diffuse_intensity = 1.0f;
+
+    main_light = Light(red, green, blue, ambient_intensity,
+                       x_direction, y_direction, z_direction, diffuse_intensity);
 }
 
 
@@ -123,7 +177,9 @@ int main() {
                                             0.1f,
                                             100.0f);
 
-    int uniform_projection = 0, uniform_model = 0, uniform_view = 0, uniform_ambient_intensity = 0, uniform_ambient_colour = 0;
+    int uniform_projection = 0, uniform_model = 0, uniform_view = 0,
+            uniform_ambient_intensity = 0, uniform_ambient_colour = 0,
+            uniform_direction = 0, uniform_diffuse_intensity = 0;
 
     // Loop until window closed
     while (!main_window.GetShouldClose()) {
@@ -147,7 +203,12 @@ int main() {
 
         uniform_ambient_colour = shader_list[0]->GetUniformAmbientColour();
         uniform_ambient_intensity = shader_list[0]->GetUniformAmbientIntensity();
-        ambient_light.UseLight(uniform_ambient_intensity, uniform_ambient_colour);
+
+        uniform_direction = shader_list[0]->GetUniformDirection();
+        uniform_diffuse_intensity = shader_list[0]->GetUniformDiffuseIntensity();
+
+        main_light.UseLight(uniform_ambient_intensity, uniform_ambient_colour,
+                            uniform_diffuse_intensity, uniform_direction);
 
         // attach the projection Matrix
         glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection));
@@ -165,7 +226,7 @@ int main() {
         mesh_list[0]->RenderMesh();
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.5f, -2.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 1.0f, -2.5f));
         model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
         glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
 
