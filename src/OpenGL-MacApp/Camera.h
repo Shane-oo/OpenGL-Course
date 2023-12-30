@@ -38,6 +38,9 @@ public:
     glm::mat4 CalculateViewMatrix();
 
     void MouseControl(GLfloat x_change, GLfloat y_change);
+
+    const glm::vec3 &getPosition() const;
+
 };
 
 

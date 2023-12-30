@@ -81,3 +81,7 @@ void Camera::MouseControl(GLfloat x_change, GLfloat y_change) {
     Update();
 }
 
+const glm::vec3 &Camera::getPosition() const {
+    return position;
+}
+

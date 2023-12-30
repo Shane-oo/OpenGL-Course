@@ -31,7 +31,9 @@ add_executable(OpenGL_MacApp
         Texture.cpp
         Texture.h
         Light.cpp
-        Light.h)
+        Light.h
+        Material.cpp
+        Material.h)
 
 # Copy the Resources folder to the build and binary directory
 add_custom_target(

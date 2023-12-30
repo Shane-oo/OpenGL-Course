@@ -93,7 +93,9 @@ void Shader::CompileShader(const char *vShader, const char *fShader) {
     uniform_ambient_intensity = glGetUniformLocation(shader_ID, "directional_light.ambient_intensity");
     uniform_diffuse_intensity = glGetUniformLocation(shader_ID, "directional_light.diffuse_intensity");
     uniform_direction = glGetUniformLocation(shader_ID, "directional_light.direction");
-
+    uniform_specular_intensity = glGetUniformLocation(shader_ID, "material.specular_intensity");
+    uniform_shininess = glGetUniformLocation(shader_ID, "material.shininess");
+    uniform_eye_position = glGetUniformLocation(shader_ID, "eye_position");
 }
 
 
@@ -108,32 +110,44 @@ Shader::~Shader() {
     ClearShader();
 }
 
-int Shader::GetUniformProjection() const {
+GLint Shader::GetUniformProjection() const {
     return uniform_projection;
 }
 
-int Shader::GetUniformModel() const {
+GLint Shader::GetUniformModel() const {
     return uniform_model;
 }
 
-int Shader::GetUniformView() const {
+GLint Shader::GetUniformView() const {
     return uniform_view;
 }
 
-int Shader::GetUniformAmbientIntensity() const {
+GLint Shader::GetUniformAmbientIntensity() const {
     return uniform_ambient_intensity;
 }
 
-int Shader::GetUniformAmbientColour() const {
+GLint Shader::GetUniformAmbientColour() const {
     return uniform_ambient_colour;
 }
 
-int Shader::GetUniformDiffuseIntensity() const {
+GLint Shader::GetUniformDiffuseIntensity() const {
     return uniform_diffuse_intensity;
 }
 
-int Shader::GetUniformDirection() const {
+GLint Shader::GetUniformDirection() const {
     return uniform_direction;
+}
+
+GLint Shader::GetUniformSpecularIntensity() const {
+    return uniform_specular_intensity;
+}
+
+GLint Shader::GetUniformShininess() const {
+    return uniform_shininess;
+}
+
+GLint Shader::GetUniformEyePosition() const {
+    return uniform_eye_position;
 }
 
 
@@ -163,7 +177,17 @@ void Shader::ClearShader() {
 
     uniform_model = 0;
     uniform_projection = 0;
+    uniform_view = 0;
+    uniform_ambient_colour = 0;
+    uniform_ambient_intensity = 0;
+    uniform_diffuse_intensity = 0;
+    uniform_direction = 0;
+    uniform_specular_intensity = 0;
+    uniform_shininess = 0;
 }
+
+
+
 
 
 

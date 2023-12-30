@@ -23,21 +23,13 @@ Light::Light(GLfloat red, GLfloat green, GLfloat blue, GLfloat ambient_intensity
 }
 
 
-void Light::UseLight(int ambient_intensity_location, int ambient_colour_location,
-                     int diffuse_intensity_location, int direction_location) {
+void Light::UseLight(GLint ambient_intensity_location, GLint ambient_colour_location,
+                     GLint diffuse_intensity_location, GLint direction_location) {
     glUniform3f(ambient_colour_location, colour.x, colour.y, colour.z);
     glUniform1f(ambient_intensity_location, ambient_intensity);
-//    printf("ambient_colour_location %d and the value x: %f y: %f z:%f \n", ambient_colour_location, colour.x, colour.y,
-//           colour.z);
-//    printf("ambient_intensity_location %d and the value %f\n", ambient_intensity_location, ambient_intensity);
-
 
     glUniform3f(direction_location, direction.x, direction.y, direction.z);
     glUniform1f(diffuse_intensity_location, diffuse_intensity);
 
-//    printf("Direction_location %d and the value x: %f y: %f z:%f \n", direction_location, direction.x, direction.y,
-//           direction.z);
-//
-//    printf("diffuse_intensity_location %d and the value %f\n", diffuse_intensity_location, diffuse_intensity);
 }
 

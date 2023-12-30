@@ -22,8 +22,8 @@ public:
     Light(GLfloat red, GLfloat green, GLfloat blue, GLfloat ambient_intensity,
           GLfloat x_direction, GLfloat y_direction, GLfloat z_direction, GLfloat diffuse_intensity);
 
-    void UseLight(int ambient_intensity_location, int ambient_colour_location,
-                  int diffuse_intensity_location, int direction_location);
+    void UseLight(GLint ambient_intensity_location, GLint ambient_colour_location,
+                  GLint diffuse_intensity_location, GLint direction_location);
 };
 
 

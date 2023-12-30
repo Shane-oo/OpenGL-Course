@@ -13,6 +13,7 @@
 #include "Camera.h"
 #include "Texture.h"
 #include "Light.h"
+#include "Material.h"
 
 // important glm::mat4 model is now glm::mat4 model(1.0f);
 // or model = glm::mat(1.0f);
@@ -24,6 +25,9 @@ std::vector<Shader *> shader_list;
 
 Texture brick_texture;
 Texture dirt_texture;
+
+Material shiny_material;
+Material dull_material;
 
 Light main_light;
 
@@ -102,9 +106,9 @@ void CreateObjects() {
 
     GLfloat vertices[] = {
             // x        y           z           u       v       normals(x,y,z)
-            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            -1.0f, -1.0f, -0.6f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
             0.0f, -1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-            1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            1.0f, -1.0f, -0.6f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f
     };
 
@@ -144,6 +148,11 @@ void CreateTextures() {
     dirt_texture.LoadTexture();
 }
 
+void CreateMaterials() {
+    shiny_material = Material(1.0f, 32);
+    dull_material = Material(0.3f, 4);
+}
+
 void CreateLights() {
     GLfloat red = 1.0f;
     GLfloat green = 1.0f;
@@ -153,7 +162,7 @@ void CreateLights() {
     GLfloat x_direction = 2.0f;
     GLfloat y_direction = -1.0f;
     GLfloat z_direction = -2.0f;
-    GLfloat diffuse_intensity = 1.0f;
+    GLfloat diffuse_intensity = 0.3f;
 
     main_light = Light(red, green, blue, ambient_intensity,
                        x_direction, y_direction, z_direction, diffuse_intensity);
@@ -162,13 +171,14 @@ void CreateLights() {
 
 int main() {
 
-    main_window = GLWindow(800, 600);
+    main_window = GLWindow(1366, 768);
     main_window.Initialise();
 
     CreateObjects();
     CreateShaders();
     CreateCamera();
     CreateTextures();
+    CreateMaterials();
     CreateLights();
 
 
@@ -177,9 +187,10 @@ int main() {
                                             0.1f,
                                             100.0f);
 
-    int uniform_projection = 0, uniform_model = 0, uniform_view = 0,
+    GLint uniform_projection = 0, uniform_model = 0, uniform_view = 0, uniform_eye_position = 0,
             uniform_ambient_intensity = 0, uniform_ambient_colour = 0,
-            uniform_direction = 0, uniform_diffuse_intensity = 0;
+            uniform_direction = 0, uniform_diffuse_intensity = 0,
+            uniform_specular_intensity = 0, uniform_shininess = 0;
 
     // Loop until window closed
     while (!main_window.GetShouldClose()) {
@@ -200,12 +211,16 @@ int main() {
         uniform_model = shader_list[0]->GetUniformModel();
         uniform_projection = shader_list[0]->GetUniformProjection();
         uniform_view = shader_list[0]->GetUniformView();
+        uniform_eye_position = shader_list[0]->GetUniformEyePosition();
 
         uniform_ambient_colour = shader_list[0]->GetUniformAmbientColour();
         uniform_ambient_intensity = shader_list[0]->GetUniformAmbientIntensity();
 
         uniform_direction = shader_list[0]->GetUniformDirection();
         uniform_diffuse_intensity = shader_list[0]->GetUniformDiffuseIntensity();
+
+        uniform_specular_intensity = shader_list[0]->GetUniformSpecularIntensity();
+        uniform_shininess = shader_list[0]->GetUniformShininess();
 
         main_light.UseLight(uniform_ambient_intensity, uniform_ambient_colour,
                             uniform_diffuse_intensity, uniform_direction);
@@ -214,23 +229,28 @@ int main() {
         glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection));
         // attach the view
         glUniformMatrix4fv(uniform_view, 1, GL_FALSE, glm::value_ptr(camera.CalculateViewMatrix()));
+        // attach the eye_position
+        glm::vec3 camera_position = camera.getPosition();
+        glUniform3f(uniform_eye_position, camera_position.x, camera_position.y, camera_position.z);
 
         glm::mat4 model(1.0f);
         // translate on x-axis by triOffset
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
         // scale
-        model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+        //model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
         glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
 
         brick_texture.UseTexture();
+        shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
         mesh_list[0]->RenderMesh();
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 1.0f, -2.5f));
-        model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 3.0f, -2.5f));
+        //model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
         glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
 
         dirt_texture.UseTexture();
+        dull_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
         mesh_list[1]->RenderMesh();
 
         glUseProgram(0);

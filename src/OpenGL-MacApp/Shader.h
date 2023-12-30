@@ -12,8 +12,9 @@
 class Shader {
 private:
     GLuint shader_ID;
-    int uniform_projection, uniform_model, uniform_view,
-            uniform_ambient_intensity, uniform_ambient_colour, uniform_diffuse_intensity, uniform_direction;
+    GLint uniform_projection, uniform_model, uniform_view, uniform_eye_position,
+            uniform_ambient_intensity, uniform_ambient_colour, uniform_diffuse_intensity, uniform_direction,
+            uniform_specular_intensity, uniform_shininess;
 
     void CompileShader(const char *vShader, const char *fShader);
 
@@ -26,19 +27,25 @@ public:
 
     ~Shader();
 
-    int GetUniformProjection() const;
+    GLint GetUniformProjection() const;
 
-    int GetUniformModel() const;
+    GLint GetUniformModel() const;
 
-    int GetUniformView() const;
+    GLint GetUniformView() const;
 
-    int GetUniformAmbientIntensity() const;
+    GLint GetUniformAmbientIntensity() const;
 
-    int GetUniformAmbientColour() const;
+    GLint GetUniformAmbientColour() const;
 
-    int GetUniformDiffuseIntensity() const;
+    GLint GetUniformDiffuseIntensity() const;
 
-    int GetUniformDirection() const;
+    GLint GetUniformDirection() const;
+
+    GLint GetUniformSpecularIntensity() const;
+
+    GLint GetUniformShininess() const;
+
+    GLint GetUniformEyePosition() const;
 
     void CreateFromString(const char *vertexCode, const char *fragmentCode);
 

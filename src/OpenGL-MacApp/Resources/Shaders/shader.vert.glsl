@@ -10,6 +10,7 @@ uniform mat4 view;
 out vec4 vCol;
 out vec2 TexCoord;
 out vec3 Normal;
+out vec3 FragPosition;
 
 void main(){
     gl_Position = projection * view * model * vec4(pos, 1.0);
@@ -19,4 +20,6 @@ void main(){
     TexCoord = texture;
 
     Normal = mat3(transpose(inverse(model))) * norm;
+
+    FragPosition = (model * vec4(pos, 1.0)).xyz;
 }
