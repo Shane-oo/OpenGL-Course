@@ -89,13 +89,43 @@ void Shader::CompileShader(const char *vShader, const char *fShader) {
     uniform_model = glGetUniformLocation(shader_ID, "model");
     uniform_projection = glGetUniformLocation(shader_ID, "projection");
     uniform_view = glGetUniformLocation(shader_ID, "view");
-    uniform_ambient_colour = glGetUniformLocation(shader_ID, "directional_light.colour");
-    uniform_ambient_intensity = glGetUniformLocation(shader_ID, "directional_light.ambient_intensity");
-    uniform_diffuse_intensity = glGetUniformLocation(shader_ID, "directional_light.diffuse_intensity");
-    uniform_direction = glGetUniformLocation(shader_ID, "directional_light.direction");
+    uniform_directional_light.uniform_color = glGetUniformLocation(shader_ID, "directional_light.base.colour");
+    uniform_directional_light.uniform_ambient_intensity = glGetUniformLocation(shader_ID,
+                                                                               "directional_light.base.ambient_intensity");
+    uniform_directional_light.uniform_diffuse_intensity = glGetUniformLocation(shader_ID,
+                                                                               "directional_light.base.diffuse_intensity");
+    uniform_directional_light.uniform_direction = glGetUniformLocation(shader_ID, "directional_light.direction");
     uniform_specular_intensity = glGetUniformLocation(shader_ID, "material.specular_intensity");
     uniform_shininess = glGetUniformLocation(shader_ID, "material.shininess");
     uniform_eye_position = glGetUniformLocation(shader_ID, "eye_position");
+
+    uniform_point_light_count = glGetUniformLocation(shader_ID, "point_light_count");
+
+    for (size_t i = 0; i < MAX_POINT_LIGHTS; i++) {
+        char location_buffer[100] = {'\0'};
+
+        // point_lights[0].base.colour, point_lights[1].base.colour ...
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].base.colour", i);
+        uniform_point_light[i].uniform_color = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].base.ambient_intensity", i);
+        uniform_point_light[i].uniform_ambient_intensity = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].base.diffuse_intensity", i);
+        uniform_point_light[i].uniform_diffuse_intensity = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].position", i);
+        uniform_point_light[i].uniform_position = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].constant", i);
+        uniform_point_light[i].uniform_constant = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].linear", i);
+        uniform_point_light[i].uniform_linear = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].exponent", i);
+        uniform_point_light[i].uniform_exponent = glGetUniformLocation(shader_ID, location_buffer);
+    }
 }
 
 
@@ -104,6 +134,8 @@ Shader::Shader() {
     uniform_model = 0;
     uniform_projection = 0;
     uniform_view = 0;
+
+    point_light_count = 0;
 }
 
 Shader::~Shader() {
@@ -120,22 +152,6 @@ GLint Shader::GetUniformModel() const {
 
 GLint Shader::GetUniformView() const {
     return uniform_view;
-}
-
-GLint Shader::GetUniformAmbientIntensity() const {
-    return uniform_ambient_intensity;
-}
-
-GLint Shader::GetUniformAmbientColour() const {
-    return uniform_ambient_colour;
-}
-
-GLint Shader::GetUniformDiffuseIntensity() const {
-    return uniform_diffuse_intensity;
-}
-
-GLint Shader::GetUniformDirection() const {
-    return uniform_direction;
 }
 
 GLint Shader::GetUniformSpecularIntensity() const {
@@ -169,6 +185,35 @@ void Shader::UseShader() {
     glUseProgram(shader_ID);
 }
 
+
+void Shader::SetDirectionalLight(DirectionalLight *directional_light) {
+    directional_light->UseDirectionalLight(uniform_directional_light.uniform_ambient_intensity,
+                                           uniform_directional_light.uniform_color,
+                                           uniform_directional_light.uniform_diffuse_intensity,
+                                           uniform_directional_light.uniform_direction);
+}
+
+void Shader::SetPointLights(PointLight *point_lights, GLint light_count) {
+    if (light_count > MAX_POINT_LIGHTS) {
+        light_count = MAX_POINT_LIGHTS;
+    }
+
+    glUniform1i(uniform_point_light_count, light_count);
+
+    for (size_t i = 0; i < light_count; i++) {
+        point_lights[i].UsePointLight(
+                uniform_point_light[i].uniform_ambient_intensity,
+                uniform_point_light[i].uniform_color,
+                uniform_point_light[i].uniform_diffuse_intensity,
+                uniform_point_light[i].uniform_position,
+                uniform_point_light[i].uniform_constant,
+                uniform_point_light[i].uniform_linear,
+                uniform_point_light[i].uniform_exponent
+        );
+    }
+}
+
+
 void Shader::ClearShader() {
     if (shader_ID != 0) {
         glDeleteProgram(shader_ID);
@@ -178,13 +223,24 @@ void Shader::ClearShader() {
     uniform_model = 0;
     uniform_projection = 0;
     uniform_view = 0;
-    uniform_ambient_colour = 0;
-    uniform_ambient_intensity = 0;
-    uniform_diffuse_intensity = 0;
-    uniform_direction = 0;
+    uniform_directional_light.uniform_color = 0;
+    uniform_directional_light.uniform_ambient_intensity = 0;
+    uniform_directional_light.uniform_diffuse_intensity = 0;
+    uniform_directional_light.uniform_direction = 0;
     uniform_specular_intensity = 0;
     uniform_shininess = 0;
+
+    for (auto &i: uniform_point_light) {
+        i.uniform_color = 0;
+        i.uniform_ambient_intensity = 0;
+        i.uniform_diffuse_intensity = 0;
+        i.uniform_position = 0;
+        i.uniform_constant = 0;
+        i.uniform_linear = 0;
+        i.uniform_exponent = 0;
+    }
 }
+
 
 
 

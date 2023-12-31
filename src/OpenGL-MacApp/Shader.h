@@ -8,13 +8,38 @@
 
 #include <GL/glew.h>
 #include <string>
+#include "Lights/DirectionalLight.h"
+#include "CommonValues.h"
+#include "Lights/PointLight.h"
 
 class Shader {
 private:
     GLuint shader_ID;
+
     GLint uniform_projection, uniform_model, uniform_view, uniform_eye_position,
-            uniform_ambient_intensity, uniform_ambient_colour, uniform_diffuse_intensity, uniform_direction,
             uniform_specular_intensity, uniform_shininess;
+
+    int point_light_count;
+    GLint uniform_point_light_count;
+
+    struct {
+        GLint uniform_color;
+        GLint uniform_ambient_intensity;
+        GLint uniform_diffuse_intensity;
+
+        GLint uniform_direction;
+    } uniform_directional_light;
+
+    struct {
+        GLint uniform_color;
+        GLint uniform_ambient_intensity;
+        GLint uniform_diffuse_intensity;
+
+        GLint uniform_position;
+        GLint uniform_constant;
+        GLint uniform_linear;
+        GLint uniform_exponent;
+    } uniform_point_light[MAX_POINT_LIGHTS];
 
     void CompileShader(const char *vShader, const char *fShader);
 
@@ -33,14 +58,6 @@ public:
 
     GLint GetUniformView() const;
 
-    GLint GetUniformAmbientIntensity() const;
-
-    GLint GetUniformAmbientColour() const;
-
-    GLint GetUniformDiffuseIntensity() const;
-
-    GLint GetUniformDirection() const;
-
     GLint GetUniformSpecularIntensity() const;
 
     GLint GetUniformShininess() const;
@@ -52,6 +69,10 @@ public:
     void CreateFromFiles(const char *vertexName, const char *fragmentName);
 
     void UseShader();
+
+    void SetDirectionalLight(DirectionalLight *directional_light);
+
+    void SetPointLights(PointLight *point_lights, GLint light_count);
 
     void ClearShader();
 

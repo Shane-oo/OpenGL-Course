@@ -30,10 +30,15 @@ add_executable(OpenGL_MacApp
         Camera.h
         Texture.cpp
         Texture.h
-        Light.cpp
-        Light.h
+        Lights/Light.cpp
+        Lights/Light.h
         Material.cpp
-        Material.h)
+        Material.h
+        Lights/DirectionalLight.cpp
+        Lights/DirectionalLight.h
+        Lights/PointLight.cpp
+        Lights/PointLight.h
+        CommonValues.h)
 
 # Copy the Resources folder to the build and binary directory
 add_custom_target(
