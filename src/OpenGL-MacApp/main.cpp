@@ -200,9 +200,10 @@ void CreateLights(GLint &point_light_count) {
     GLfloat point_light1_y_position = 0.0f;
     GLfloat point_light1_z_position = 0.0f;
 
-    GLfloat point_light1_exponent = 0.1f;
-    GLfloat point_light1_linear = 0.2f;
-    GLfloat point_light1_constant = 0.3f;
+    // 100 Range
+    GLfloat point_light1_exponent = 0.0075f;
+    GLfloat point_light1_linear = 0.045f;
+    GLfloat point_light1_constant = 1.0f;
 
 
     point_lights[0] = PointLight(point_light1_red, point_light1_green, point_light1_blue,
@@ -221,9 +222,10 @@ void CreateLights(GLint &point_light_count) {
     GLfloat point_light2_y_position = 2.0f;
     GLfloat point_light2_z_position = 0.0f;
 
-    GLfloat point_light2_exponent = 0.1f;
-    GLfloat point_light2_linear = 0.1f;
-    GLfloat point_light2_constant = 0.3f;
+    // 50 Range
+    GLfloat point_light2_exponent = 0.032f;
+    GLfloat point_light2_linear = 0.09f;
+    GLfloat point_light2_constant = 1.0f;
 
 
     point_lights[1] = PointLight(point_light2_red, point_light2_green, point_light2_blue,
