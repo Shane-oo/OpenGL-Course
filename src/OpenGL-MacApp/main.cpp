@@ -33,6 +33,7 @@ Material dull_material;
 
 DirectionalLight main_light;
 PointLight point_lights[MAX_POINT_LIGHTS];
+SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 double delta_time = 0.0f;
 double last_time = 0.0f;
@@ -175,12 +176,12 @@ void CreateMaterials() {
     dull_material = Material(0.3f, 4);
 }
 
-void CreateLights(GLint &point_light_count) {
+void CreateLights(GLint &point_light_count, GLint &spotLightCount) {
     GLfloat red = 1.0f;
     GLfloat green = 1.0f;
     GLfloat blue = 1.0f;
-    GLfloat ambient_intensity = 0.2f;
-    GLfloat diffuse_intensity = 0.3f;
+    GLfloat ambient_intensity = 0.1f;
+    GLfloat diffuse_intensity = 0.4f;
 
     GLfloat x_direction = 2.0f;
     GLfloat y_direction = -1.0f;
@@ -194,7 +195,7 @@ void CreateLights(GLint &point_light_count) {
     GLfloat point_light1_green = 0.0f;
     GLfloat point_light1_blue = 1.0f;
     GLfloat point_light1_ambient_intensity = 0.1f;
-    GLfloat point_light1_diffuse_intensity = 1.0f;
+    GLfloat point_light1_diffuse_intensity = 0.5f;
 
     GLfloat point_light1_x_position = 4.0f;
     GLfloat point_light1_y_position = 0.0f;
@@ -216,7 +217,7 @@ void CreateLights(GLint &point_light_count) {
     GLfloat point_light2_green = 1.0f;
     GLfloat point_light2_blue = 0.0f;
     GLfloat point_light2_ambient_intensity = 0.1f;
-    GLfloat point_light2_diffuse_intensity = 1.0f;
+    GLfloat point_light2_diffuse_intensity = 0.1f;
 
     GLfloat point_light2_x_position = -4.0f;
     GLfloat point_light2_y_position = 2.0f;
@@ -227,13 +228,41 @@ void CreateLights(GLint &point_light_count) {
     GLfloat point_light2_linear = 0.09f;
     GLfloat point_light2_constant = 1.0f;
 
-
     point_lights[1] = PointLight(point_light2_red, point_light2_green, point_light2_blue,
                                  point_light2_ambient_intensity, point_light2_diffuse_intensity,
                                  point_light2_x_position, point_light2_y_position, point_light2_z_position,
                                  point_light2_constant, point_light2_linear, point_light2_exponent);
     point_light_count += 1;
 
+
+    GLfloat spotLight1_red = 1.0f;
+    GLfloat spotLight1_green = 1.0f;
+    GLfloat spotLight1_blue = 1.0f;
+    GLfloat spotLight1_ambient_intensity = 0.0f;
+    GLfloat spotLight1_diffuse_intensity = 2.0f;
+
+    GLfloat spotLight1_x_position = 4.0f;
+    GLfloat spotLight1_y_position = 0.0f;
+    GLfloat spotLight1_z_position = 0.0f;
+
+
+    GLfloat spotLight1_exponent = 0.1;
+    GLfloat spotLight1_linear = 0.2f;
+    GLfloat spotLight1_constant = 0.3f;
+
+    GLfloat spotLight1XDirection = 0.0f;
+    GLfloat spotLight1YDirection = -1.0f;
+    GLfloat spotLight1ZDirection = 0.0f;
+
+    GLfloat spotLight1Edge = 20.0f; // 20 degrees
+
+    spotLights[0] = SpotLight(spotLight1_red, spotLight1_green, spotLight1_blue, spotLight1_ambient_intensity,
+                              spotLight1_diffuse_intensity,
+                              spotLight1_x_position, spotLight1_y_position, spotLight1_z_position,
+                              spotLight1XDirection, spotLight1YDirection, spotLight1ZDirection,
+                              spotLight1_constant, spotLight1_linear, spotLight1_exponent,
+                              spotLight1Edge);
+    spotLightCount++;
 }
 
 
@@ -248,7 +277,8 @@ int main() {
     CreateTextures();
     CreateMaterials();
     GLint point_light_count = 0;
-    CreateLights(point_light_count);
+    GLint spotLightCount = 0;
+    CreateLights(point_light_count, spotLightCount);
 
 
     glm::mat4 projection = glm::perspective(toRadians(45.0f),
@@ -283,8 +313,11 @@ int main() {
         uniform_specular_intensity = shader_list[0]->GetUniformSpecularIntensity();
         uniform_shininess = shader_list[0]->GetUniformShininess();
 
+        spotLights[0].SetAsFlashLight(camera.getPosition(), camera.GetDirection());
+
         shader_list[0]->SetDirectionalLight(&main_light);
         shader_list[0]->SetPointLights(point_lights, point_light_count);
+        shader_list[0]->SetSpotLights(spotLights, spotLightCount);
 
 
         // attach the projection Matrix
@@ -321,7 +354,7 @@ int main() {
         //model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
         glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
 
-        plain_texture.UseTexture();
+        dirt_texture.UseTexture();
         shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
         mesh_list[2]->RenderMesh();
 

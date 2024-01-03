@@ -126,6 +126,40 @@ void Shader::CompileShader(const char *vShader, const char *fShader) {
         snprintf(location_buffer, sizeof(location_buffer), "point_lights[%zu].exponent", i);
         uniform_point_light[i].uniform_exponent = glGetUniformLocation(shader_ID, location_buffer);
     }
+
+    uniformSpotLightCount = glGetUniformLocation(shader_ID, "spotLightCount");
+
+    for (size_t i = 0; i < MAX_SPOT_LIGHTS; i++) {
+        char location_buffer[100] = {'\0'};
+
+        // point_lights[0].base.colour, point_lights[1].base.colour ...
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.base.colour", i);
+        uniformSpotLights[i].uniform_color = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.base.ambient_intensity", i);
+        uniformSpotLights[i].uniform_ambient_intensity = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.base.diffuse_intensity", i);
+        uniformSpotLights[i].uniform_diffuse_intensity = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.position", i);
+        uniformSpotLights[i].uniform_position = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.constant", i);
+        uniformSpotLights[i].uniform_constant = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.linear", i);
+        uniformSpotLights[i].uniform_linear = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].pointLight.exponent", i);
+        uniformSpotLights[i].uniform_exponent = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].direction", i);
+        uniformSpotLights[i].uniformDirection = glGetUniformLocation(shader_ID, location_buffer);
+
+        snprintf(location_buffer, sizeof(location_buffer), "spotLights[%zu].edge", i);
+        uniformSpotLights[i].uniformEdge = glGetUniformLocation(shader_ID, location_buffer);
+    }
 }
 
 
@@ -136,6 +170,7 @@ Shader::Shader() {
     uniform_view = 0;
 
     point_light_count = 0;
+    spotLightCount = 0;
 }
 
 Shader::~Shader() {
@@ -214,6 +249,29 @@ void Shader::SetPointLights(PointLight *point_lights, GLint light_count) {
 }
 
 
+void Shader::SetSpotLights(SpotLight *spotLights, GLint lightCount) {
+    if (lightCount > MAX_SPOT_LIGHTS) {
+        lightCount = MAX_SPOT_LIGHTS;
+    }
+
+    glUniform1i(uniformSpotLightCount, lightCount);
+
+    for (size_t i = 0; i < lightCount; i++) {
+        spotLights[i].UseSpotLight(
+                uniformSpotLights[i].uniform_ambient_intensity,
+                uniformSpotLights[i].uniform_color,
+                uniformSpotLights[i].uniform_diffuse_intensity,
+                uniformSpotLights[i].uniform_position,
+                uniformSpotLights[i].uniformDirection,
+                uniformSpotLights[i].uniform_constant,
+                uniformSpotLights[i].uniform_linear,
+                uniformSpotLights[i].uniform_exponent,
+                uniformSpotLights[i].uniformEdge
+        );
+    }
+}
+
+
 void Shader::ClearShader() {
     if (shader_ID != 0) {
         glDeleteProgram(shader_ID);
@@ -238,6 +296,18 @@ void Shader::ClearShader() {
         i.uniform_constant = 0;
         i.uniform_linear = 0;
         i.uniform_exponent = 0;
+    }
+
+    for (auto &i: uniformSpotLights) {
+        i.uniform_color = 0;
+        i.uniform_ambient_intensity = 0;
+        i.uniform_diffuse_intensity = 0;
+        i.uniform_position = 0;
+        i.uniform_constant = 0;
+        i.uniform_linear = 0;
+        i.uniform_exponent = 0;
+        i.uniformDirection = 0;
+        i.uniformEdge = 0;
     }
 }
 

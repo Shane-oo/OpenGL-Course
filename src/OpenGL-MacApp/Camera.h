@@ -33,6 +33,8 @@ public:
 
     ~Camera();
 
+    glm::vec3 GetDirection();
+
     void KeyControl(const bool *keys, double delta_time);
 
     glm::mat4 CalculateViewMatrix();

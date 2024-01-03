@@ -38,7 +38,9 @@ add_executable(OpenGL_MacApp
         Lights/DirectionalLight.h
         Lights/PointLight.cpp
         Lights/PointLight.h
-        CommonValues.h)
+        CommonValues.h
+        Lights/SpotLight.cpp
+        Lights/SpotLight.h)
 
 # Copy the Resources folder to the build and binary directory
 add_custom_target(

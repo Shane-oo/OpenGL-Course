@@ -9,7 +9,7 @@
 #include "Light.h"
 
 class PointLight : public Light {
-private:
+protected:
     glm::vec3 position;
 
     GLfloat constant;
@@ -19,16 +19,16 @@ private:
 public:
     PointLight();
 
-    PointLight(GLfloat red, GLfloat green, GLfloat blue, GLfloat ambient_intensity, GLfloat diffuse_intensity,
-               GLfloat x_position, GLfloat y_position, GLfloat z_position,
+    PointLight(GLfloat red, GLfloat green, GLfloat blue, GLfloat ambientIntensity, GLfloat diffuseIntensity,
+               GLfloat xPosition, GLfloat yPosition, GLfloat zPosition,
                GLfloat constant, GLfloat linear, GLfloat exponent);
 
 
     ~PointLight();
 
-    void UsePointLight(GLint ambient_intensity_location, GLint ambient_colour_location,
-                       GLint diffuse_intensity_location, GLint position_location,
-                       GLint constant_location, GLint linear_location, GLint exponent_location);
+    void UsePointLight(GLint ambientIntensityLocation, GLint ambientColourLocation,
+                       GLint diffuseIntensityLocation, GLint positionLocation,
+                       GLint constantLocation, GLint linearLocation, GLint exponentLocation);
 };
 
 
