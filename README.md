@@ -1,4 +1,5 @@
 # OpenGL-Course
+# Check out the Wiki!
 
 Mac Installation steps:
 1. Download Homebrew
