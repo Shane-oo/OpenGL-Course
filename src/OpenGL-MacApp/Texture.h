@@ -20,7 +20,9 @@ public:
 
     ~Texture();
 
-    void LoadTexture();
+    bool LoadTexture();
+
+    bool LoadTextureWithAlpha();
 
     void UseTexture();
 

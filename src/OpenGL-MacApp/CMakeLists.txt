@@ -16,6 +16,9 @@ include_directories(${GLEW_INCLUDE_DIRS})
 # Find GLM package
 find_package(glm REQUIRED)
 
+# Find assimp package
+find_package(assimp REQUIRED)
+
 # Add your source files
 add_executable(OpenGL_MacApp
         main.cpp
@@ -63,4 +66,7 @@ target_link_libraries(OpenGL_MacApp PRIVATE ${OPENGL_gl_LIBRARY})
 
 # Link GLM Library
 target_link_directories(OpenGL_MacApp PRIVATE glm)
+
+# Link assimp Library
+target_link_libraries(OpenGL_MacApp PRIVATE assimp::assimp)
 
