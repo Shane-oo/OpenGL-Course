@@ -7,3 +7,4 @@ src/OpenGL-MacApp/.DS_Store
 src/.DS_Store
 src/OpenGL-MacApp/Shaders/.DS_Store
 .DS_Store
+src/OpenGL-MacApp/cmake-build-debug/

@@ -5,7 +5,6 @@ project(OpenGL_MacApp)
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 
-
 # Find GLFW package
 find_package(glfw3 REQUIRED)
 
