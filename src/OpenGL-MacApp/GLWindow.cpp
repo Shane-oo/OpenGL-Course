@@ -14,6 +14,8 @@ GLWindow::GLWindow() {
     }
     mouse_x_change = 0.0f;
     mouse_y_change = 0.0f;
+
+    mouse_first_moved = false;
 }
 
 GLWindow::GLWindow(GLint window_width, GLint window_height) {
@@ -24,6 +26,8 @@ GLWindow::GLWindow(GLint window_width, GLint window_height) {
     }
     mouse_x_change = 0.0f;
     mouse_y_change = 0.0f;
+
+    mouse_first_moved = false;
 }
 
 GLWindow::~GLWindow() {

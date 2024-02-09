@@ -7,12 +7,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 #include "Mesh.h"
 #include "Shader.h"
 #include "GLWindow.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Lights/Light.h"
 #include "Material.h"
 #include "Lights/DirectionalLight.h"
 
@@ -162,13 +162,13 @@ void CreateCamera() {
 
 void CreateTextures() {
     brick_texture = Texture("Resources/Images/brick.png");
-    brick_texture.LoadTexture();
+    brick_texture.LoadTextureWithAlpha();
 
     dirt_texture = Texture("Resources/Images/dirt.png");
-    dirt_texture.LoadTexture();
+    dirt_texture.LoadTextureWithAlpha();
 
     plain_texture = Texture("Resources/Images/plain.png");
-    plain_texture.LoadTexture();
+    plain_texture.LoadTextureWithAlpha();
 }
 
 void CreateMaterials() {

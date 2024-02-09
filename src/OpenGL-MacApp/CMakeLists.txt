@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.27)
 project(OpenGL_MacApp)
 
+# Prevents a bunch of crap being created
+set(CMAKE_SUPPRESS_REGENERATION true)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -17,7 +19,7 @@ include_directories(${GLEW_INCLUDE_DIRS})
 find_package(glm REQUIRED)
 
 # Find assimp package
-find_package(assimp REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 
 # Add your source files
 add_executable(OpenGL_MacApp
@@ -42,17 +44,20 @@ add_executable(OpenGL_MacApp
         Lights/PointLight.h
         CommonValues.h
         Lights/SpotLight.cpp
-        Lights/SpotLight.h)
+        Lights/SpotLight.h
+        Model.cpp
+        Model.h)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 # Copy the Resources folder to the build and binary directory
-add_custom_target(
-        copy_resources ALL
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${PROJECT_SOURCE_DIR}/Resources
-        ${PROJECT_BINARY_DIR}/Resources
-        COMMENT "Copying Resources into binary directory")
+#add_custom_target(
+#        copy_resources ALL
+#        COMMAND ${CMAKE_COMMAND} -E copy_directory
+#        ${PROJECT_SOURCE_DIR}/Resources
+#        ${PROJECT_BINARY_DIR}/Resources
+#        COMMENT "Copying Resources into binary directory")
 
-add_dependencies(OpenGL_MacApp copy_resources)
+#add_dependencies(OpenGL_MacApp copy_resources)
 
 
 # Link GLFW Library
