@@ -8,3 +8,4 @@ src/.DS_Store
 src/OpenGL-MacApp/Shaders/.DS_Store
 .DS_Store
 src/OpenGL-MacApp/cmake-build-debug/
+src/OpenGL-MacApp/cmake-build-debug-visual-studio/.cmake/api/v1/reply/cache*

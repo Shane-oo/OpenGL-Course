@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio/CMakeFiles/OpenGL_MacApp.dir/embed.manifest"
