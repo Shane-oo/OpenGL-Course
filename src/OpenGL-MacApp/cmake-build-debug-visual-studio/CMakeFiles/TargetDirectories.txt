@@ -1,0 +1,3 @@
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio/CMakeFiles/OpenGL_MacApp.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio/CMakeFiles/edit_cache.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio/CMakeFiles/rebuild_cache.dir

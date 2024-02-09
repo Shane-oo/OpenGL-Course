@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\GLWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\DirectionalLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\PointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\SpotLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\GLWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\DirectionalLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\PointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\CommonValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Lights\SpotLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{9EE38D2B-2706-3FE1-B2A2-D1CC2623E063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{69D7866D-2E5E-3EFC-B6BB-CA4DA0051F9B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

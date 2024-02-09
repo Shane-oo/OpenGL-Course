@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="OpenGL_MacApp"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\dev\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\scripts\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\scripts\buildsystems\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glfw3\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glm\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\assimp\;CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\pugixml\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="OpenGL_MacApp">
+				<Option output="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio/OpenGL_MacApp.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-DGLFW_DLL"/>
+					<Add directory="C:/dev/vcpkg/installed/x64-windows/include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\ATLMFC\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\cppwinrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 OpenGL_MacApp"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="OpenGL_MacApp/fast">
+				<Option output="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio/OpenGL_MacApp.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-DGLFW_DLL"/>
+					<Add directory="C:/dev/vcpkg/installed/x64-windows/include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\ATLMFC\include"/>
+					<Add directory="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\\include\10.0.22621.0\\cppwinrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 OpenGL_MacApp/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/cmake-build-debug-visual-studio"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\ShaneMonck\Documents\repos\OpenGL-Course\src\OpenGL-MacApp\cmake-build-debug-visual-studio\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Camera.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Camera.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/CommonValues.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/GLWindow.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/GLWindow.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/DirectionalLight.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/DirectionalLight.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/Light.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/Light.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/PointLight.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/PointLight.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/SpotLight.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Lights/SpotLight.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Material.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Material.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Mesh.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Mesh.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Model.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Model.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Shader.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Shader.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Texture.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/Texture.h">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/main.cpp">
+			<Option target="OpenGL_MacApp"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/scripts/buildsystems/vcpkg.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\scripts\buildsystems\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glfw3/glfw3Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glfw3\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glfw3/glfw3ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glfw3\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glfw3/glfw3Targets-debug.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glfw3\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glfw3/glfw3Targets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glfw3\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glfw3/glfw3Targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glfw3\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glew/CopyImportedTargetProperties.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glew/glew-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glew/glew-targets-debug.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glew/glew-targets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glew/glew-targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glew/vcpkg-cmake-wrapper.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glew\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glm/glmConfig-debug.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glm\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glm/glmConfig-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glm\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glm/glmConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glm\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/glm/glmConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\glm\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/assimp/assimpConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\assimp\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/assimp/assimpConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\assimp\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/assimp/assimpTargets-debug.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\assimp\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/assimp/assimpTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\assimp\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/assimp/assimpTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\assimp\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/pugixml/pugixml-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\pugixml\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/pugixml/pugixml-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\pugixml\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/pugixml/pugixml-targets-debug.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\pugixml\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/pugixml/pugixml-targets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\pugixml\"/>
+		</Unit>
+		<Unit filename="C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL-MacApp/../../../../../../../dev/vcpkg/installed/x64-windows/share/pugixml/pugixml-targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\dev\vcpkg\installed\x64-windows\share\pugixml\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
