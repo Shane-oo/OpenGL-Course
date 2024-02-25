@@ -1,0 +1,16 @@
+# ninja log v5
+666	1638	7305496326725189	OpenGL-App/CMakeFiles/OpenGL-App.dir/Lights/DirectionalLight.cpp.obj	47258a0d4b82956a
+8	984	7305488038507517	OpenGL-App/CMakeFiles/OpenGL-App.dir/OpenGL-App.cpp.obj	4f86553166ef3832
+403	662	7305496317215173	OpenGL-App/CMakeFiles/OpenGL-App.dir/Material.cpp.obj	b818128f993c206
+959	2166	7305496546947421	OpenGL-App/OpenGL-App.exe	704d979975a1f96c
+14	242	7305497138941009	build.ninja	1be33ce0ecbee33e
+22	403	7305496314575173	OpenGL-App/CMakeFiles/OpenGL-App.dir/GLWindow.cpp.obj	be2a1df6b8a4c527
+13	399	7305496314395180	OpenGL-App/CMakeFiles/OpenGL-App.dir/Mesh.cpp.obj	f5200e45de873d74
+399	1436	7305496324875198	OpenGL-App/CMakeFiles/OpenGL-App.dir/Lights/Light.cpp.obj	8f25adefce5d93ed
+51	833	7305496318655161	OpenGL-App/CMakeFiles/OpenGL-App.dir/Texture.cpp.obj	a605eea61b61393
+29	1443	7305496324855178	OpenGL-App/CMakeFiles/OpenGL-App.dir/Camera.cpp.obj	5e8f5c3450903199
+834	1669	7305496327265194	OpenGL-App/CMakeFiles/OpenGL-App.dir/Lights/PointLight.cpp.obj	153f0b5b7434490c
+18	2002	7305496330565176	OpenGL-App/CMakeFiles/OpenGL-App.dir/Shader.cpp.obj	f7c7f02bfe0a9836
+8	2130	7305496331875171	OpenGL-App/CMakeFiles/OpenGL-App.dir/main.cpp.obj	90bbb81c8012512c
+1437	2238	7305496332975164	OpenGL-App/CMakeFiles/OpenGL-App.dir/Lights/SpotLight.cpp.obj	43895ef0432ebf11
+18	958	7305496545010674	OpenGL-App/CMakeFiles/OpenGL-App.dir/Model.cpp.obj	745f3e2d08a58606
