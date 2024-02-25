@@ -69,7 +69,7 @@ void CalcAverageNormals(const unsigned int *indices, unsigned int indicesCount, 
                      vertices[in2 + 2] - vertices[in0 + 2]);
 
         glm::vec3 normal = glm::cross(v1, v2);
-        normal = glm::normalize(normal);
+        normal = -glm::normalize(normal);
 
         in0 += normalOffset;
         in1 += normalOffset;
@@ -122,10 +122,10 @@ void CreateObjects() {
     };
 
     GLfloat floor_vertices[] = {
-            -10.0f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-            10.0f, 0.0f, -10.0f, 10.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-            -10.0f, 0.0f, 10.0f, 0.0f, 10.0f, 0.0f, -1.0f, 0.0f,
-            10.0f, 0.0f, 10.0f, 10.0f, 10.0f, 0.0f, -1.0f, 0.0f
+            -10.0f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            10.0f, 0.0f, -10.0f, 10.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -10.0f, 0.0f, 10.0f, 0.0f, 10.0f, 0.0f, 1.0f, 0.0f,
+            10.0f, 0.0f, 10.0f, 10.0f, 10.0f, 0.0f, 1.0f, 0.0f
     };
 
     CalcAverageNormals(indices, 12, vertices, 32, 8, 5);

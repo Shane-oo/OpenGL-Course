@@ -57,7 +57,8 @@ vec4 CalcLightByDirection(Light light, vec3 direction){
     vec4 ambient_colour = vec4(light.colour, 1.0f) * light.ambient_intensity;
 
     //cos(angle) = A.B
-    float diffuse_factor = max(dot(normalize(Normal), normalize(direction)), 0.0f);
+    // -normalize(direction) as its the standard and the instructors does not follow
+    float diffuse_factor = max(dot(normalize(Normal), -normalize(direction)), 0.0f);
     vec4 diffuse_colour = vec4(light.colour * light.diffuse_intensity * diffuse_factor, 1.0f);
 
     vec4 specular_colour = vec4(0, 0, 0, 0);
