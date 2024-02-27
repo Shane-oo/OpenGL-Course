@@ -1,8 +1,8 @@
-# Install script for directory: E:/Repos/OpenGL-Course/src/OpenGL/OpenGL-App
+# Install script for directory: C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/OpenGL-App
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "E:/Repos/OpenGL-Course/src/OpenGL/out/install/x64-debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/install/x64-debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

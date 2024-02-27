@@ -1,5 +1,5 @@
-E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/CMakeFiles/edit_cache.dir
-E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
-E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/CMakeFiles/OpenGL-App.dir
-E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/CMakeFiles/edit_cache.dir
-E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/CMakeFiles/rebuild_cache.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/CMakeFiles/OpenGL-App.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/CMakeFiles/edit_cache.dir
+C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/CMakeFiles/rebuild_cache.dir

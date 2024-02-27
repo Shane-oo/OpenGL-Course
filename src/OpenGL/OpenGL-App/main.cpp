@@ -15,6 +15,7 @@
 #include "Texture.h"
 #include "Material.h"
 #include "Lights/DirectionalLight.h"
+#include "Model.h"
 
 // important glm::mat4 model is now glm::mat4 model(1.0f);
 // or model = glm::mat(1.0f);
@@ -30,6 +31,9 @@ Texture plain_texture;
 
 Material shiny_material;
 Material dull_material;
+
+Model xWing;
+Model blackHawk;
 
 DirectionalLight main_light;
 PointLight point_lights[MAX_POINT_LIGHTS];
@@ -176,12 +180,20 @@ void CreateMaterials() {
     dull_material = Material(0.3f, 4);
 }
 
+void CreateModels() {
+    xWing = Model();
+    xWing.LoadModel("Resources/Models/x-wing.obj");
+
+    blackHawk = Model();
+    blackHawk.LoadModel("Resources/Models/uh60.obj");
+}
+
 void CreateLights(GLint &point_light_count, GLint &spotLightCount) {
     GLfloat red = 1.0f;
     GLfloat green = 1.0f;
     GLfloat blue = 1.0f;
-    GLfloat ambient_intensity = 0.1f;
-    GLfloat diffuse_intensity = 0.4f;
+    GLfloat ambient_intensity = 0.3f;
+    GLfloat diffuse_intensity = 0.6f;
 
     GLfloat x_direction = 2.0f;
     GLfloat y_direction = -1.0f;
@@ -276,6 +288,7 @@ int main() {
     CreateCamera();
     CreateTextures();
     CreateMaterials();
+    CreateModels();
     GLint point_light_count = 0;
     GLint spotLightCount = 0;
     CreateLights(point_light_count, spotLightCount);
@@ -357,6 +370,23 @@ int main() {
         dirt_texture.UseTexture();
         shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
         mesh_list[2]->RenderMesh();
+
+        // X-Wing
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 10.0f));
+        model = glm::scale(model, glm::vec3(0.006f, 0.006f, 0.006f));
+        glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
+        shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
+        xWing.RenderModel();
+
+        // BlackHawk
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-3.0f, 2.0f, 0.0f));
+        model = glm::rotate(model, toRadians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+        glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
+        shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
+        blackHawk.RenderModel();
 
         glUseProgram(0);
 

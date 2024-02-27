@@ -1,8 +1,8 @@
-# Install script for directory: E:/Repos/OpenGL-Course/src/OpenGL
+# Install script for directory: C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "E:/Repos/OpenGL-Course/src/OpenGL/out/install/x64-debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/install/x64-debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/cmake_install.cmake")
+  include("C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/OpenGL-App/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "E:/Repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/ShaneMonck/Documents/repos/OpenGL-Course/src/OpenGL/out/build/x64-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

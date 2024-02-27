@@ -51,7 +51,32 @@ void Model::LoadMaterials(const aiScene *scene) {
 
     for (size_t i = 0; i < scene->mNumMaterials; i++) {
         aiMaterial* material = scene->mMaterials[i];
-        // todo this is where i am
+        
+        textureList[i] = nullptr;
+
+        if (material->GetTextureCount(aiTextureType_DIFFUSE)) {
+            aiString path;
+            if (material->GetTexture(aiTextureType_DIFFUSE, 0 ,&path) == AI_SUCCESS) {
+                // remove all directories and get just filename
+                int idx = std::string(path.data).rfind("\\");
+                std::string filename = std::string(path.data).substr(idx + 1);
+
+                std::string texturePath = std::string("Resources/Images/") + filename;
+
+                textureList[i] = new Texture(texturePath.c_str());
+
+                if (!textureList[i]->LoadTexture()) {
+                    printf("Failed to load texture at: %s\n", texturePath);
+                    delete textureList[i];
+                    textureList[i] = nullptr;
+                }
+            }
+        }
+
+        if (!textureList[i]) {
+            textureList[i] = new Texture("Resources/Images/plain.png");
+            textureList[i]->LoadTextureWithAlpha();
+        }
     }
 }
 
@@ -82,10 +107,30 @@ void Model::LoadModel(const std::string &fileName) {
 }
 
 void Model::RenderModel() {
+    for (size_t i = 0; i < meshList.size(); i++) {
+        unsigned int materialIndex = meshToTexture[i];
 
+        if (materialIndex < textureList.size() && textureList[materialIndex]) {
+            textureList[materialIndex]->UseTexture();
+        }
+
+        meshList[i]->RenderMesh();
+    }
 }
 
 void Model::ClearModel() {
+    for (size_t i = 0; i < meshList.size(); i++) {
+        if (meshList[i]) {
+            delete meshList[i];
+            meshList[i] = nullptr;
+        }
+    }
 
+    for (size_t i = 0; i < textureList.size(); i++) {
+        if (meshList[i]) {
+            delete textureList[i];
+            textureList[i] = nullptr;
+        }
+    }
 }
 

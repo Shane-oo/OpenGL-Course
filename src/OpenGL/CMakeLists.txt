@@ -13,3 +13,5 @@ project ("OpenGL")
 
 # Include sub-projects.
 add_subdirectory ("OpenGL-App")
+
+#annoying
