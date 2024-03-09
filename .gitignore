@@ -11,3 +11,4 @@ src/OpenGL-MacApp/cmake-build-debug/
 src/OpenGL-MacApp/cmake-build-debug-visual-studio/.cmake/api/v1/reply/cache*
 src/OpenGL-App/.vs/
 src/OpenGL/.vs/
+src/OpenGL/out/build/x64-debug/
