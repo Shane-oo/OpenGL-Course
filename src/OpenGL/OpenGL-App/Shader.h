@@ -20,7 +20,7 @@ private:
   GLint uniform_projection, uniform_model, uniform_view, uniform_eye_position,
       uniform_specular_intensity, uniform_shininess,
       uniformTexture,
-      uniformDirectionalLightSpaceTransform, uniformDirectionalShadowMap;
+      uniformDirectionalLightTransform, uniformDirectionalShadowMap;
 
   int point_light_count;
   int spotLightCount;
@@ -95,11 +95,11 @@ public:
 
   void SetSpotLights(SpotLight *spotLights, GLint lightCount);
   
-  void SetTexture(GLint textureUnit) const;
+  void SetTexture(GLint textureUnit);
   
-  void SetDirectionalShadowMap(GLint textureUnit) const;
+  void SetDirectionalShadowMap(GLint textureUnit);
   
-  void SetDirectionalLightSpaceTransform(glm::mat4*lightTransform) const;
+  void SetDirectionalLightSpaceTransform(glm::mat4 lTransform);
 
   void ClearShader();
 };

@@ -14,4 +14,4 @@ project ("OpenGL")
 # Include sub-projects.
 add_subdirectory ("OpenGL-App")
 
-# full sbdaw dsa      asads    assda     asddadasdsasaadssd   sa   asddassdadsa   sad  asd     cunt dasdas  dass dadsas          dasS      saddasdsa
+# full sbdaw dsa   assaas   asads    assda     asddadasdsasaadssd   sa   asddassdadsa   sad  asd     cunt dasdas  dass dadsas          dasS      saddasdsa

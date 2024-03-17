@@ -10,20 +10,20 @@
 class ShadowMap {
 protected:
   GLuint FBO, shadowMap;
-  GLsizei shadowWidth, shadowHeight;
+  GLuint shadowWidth, shadowHeight;
 
 public:
   ShadowMap();
 
-  virtual bool Init(GLsizei width, GLsizei height);
+  virtual bool Init(GLuint width, GLuint height);
 
   virtual void Write();
 
   virtual void Read(GLenum textureUnit);
 
-  GLsizei GetShadowWidth() const { return shadowWidth; }
+  GLuint GetShadowWidth() const { return shadowWidth; }
 
-  GLsizei GetShadowHeight() const { return shadowHeight; }
+  GLuint GetShadowHeight() const { return shadowHeight; }
 
   ~ShadowMap();
 };

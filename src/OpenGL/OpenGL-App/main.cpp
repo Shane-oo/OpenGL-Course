@@ -48,6 +48,10 @@ double last_time = 0.0f;
 
 float blackHawkAngle = 0.0f;
 
+GLint uniform_projection = 0, uniform_model = 0, uniform_view = 0,
+      uniform_eye_position = 0, uniform_specular_intensity = 0,
+      uniform_shininess = 0;
+
 // Vertex Shader codes
 static const char *vShader = "shader.vert.glsl";
 static const char *vDirectionalLightShadowMap =
@@ -281,13 +285,9 @@ void CreateLights() {
   spotLightCount++;
 }
 
-void RenderScene(GLint uniform_model, GLint uniform_specular_intensity,
-                 GLint uniform_shininess) {
+void RenderScene() {
   glm::mat4 model(1.0f);
-  // translate on x-axis by triOffset
   model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
-  // scale
-  // model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
   glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
 
   brick_texture.UseTexture();
@@ -338,33 +338,29 @@ void RenderScene(GLint uniform_model, GLint uniform_specular_intensity,
   blackHawk.RenderModel();
 }
 
-void DirectionalShadowMapPass(DirectionalLight *light,
-                              GLint uniform_specular_intensity,
-                              GLint uniform_shininess) {
+void DirectionalShadowMapPass(DirectionalLight *light) {
   directionalLightShadowShader.UseShader();
 
-  ShadowMap *shadowMap = light->GetShadowMap();
+  glViewport(0, 0, light->GetShadowMap()->GetShadowWidth(),
+             light->GetShadowMap()->GetShadowHeight());
 
-  glViewport(0, 0, shadowMap->GetShadowWidth(), shadowMap->GetShadowHeight());
-
-  shadowMap->Write();
+  light->GetShadowMap()->Write();
   glClear(GL_DEPTH_BUFFER_BIT);
 
-  GLint uniformModel = directionalLightShadowShader.GetUniformModel();
-  glm::mat4 lightTransform = light->CalculateLightTransform();
-  directionalLightShadowShader.SetDirectionalLightSpaceTransform(
-      &lightTransform);
+  uniform_model = directionalLightShadowShader.GetUniformModel();
 
-  RenderScene(uniformModel, uniform_specular_intensity, uniform_shininess);
+  directionalLightShadowShader.SetDirectionalLightSpaceTransform(
+      light->CalculateLightTransform());
+
+  RenderScene();
 
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void RenderPass(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix,
-                GLint uniform_projection, GLint uniform_view,
-                GLint uniform_eye_position, GLint &uniform_model,
-                GLint &uniform_specular_intensity, GLint &uniform_shininess) {
+void RenderPass(const glm::mat4 &projectionMatrix,
+                const glm::mat4 &viewMatrix) {
   shader_list[0]->UseShader();
+
   uniform_model = shader_list[0]->GetUniformModel();
   uniform_projection = shader_list[0]->GetUniformProjection();
   uniform_view = shader_list[0]->GetUniformView();
@@ -393,17 +389,16 @@ void RenderPass(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix,
   shader_list[0]->SetDirectionalLight(&main_light);
   shader_list[0]->SetPointLights(point_lights, point_light_count);
   shader_list[0]->SetSpotLights(spotLights, spotLightCount);
-  glm::mat4 lightTransform = main_light.CalculateLightTransform();
-  shader_list[0]->SetDirectionalLightSpaceTransform(&lightTransform);
+  shader_list[0]->SetDirectionalLightSpaceTransform(
+      main_light.CalculateLightTransform());
 
-  ShadowMap *mainLightShadowMap = main_light.GetShadowMap();
-  mainLightShadowMap->Read(GL_TEXTURE1);
+  main_light.GetShadowMap()->Read(GL_TEXTURE1);
   shader_list[0]->SetTexture(0);
-  shader_list[0]->SetDirectionalShadowMap(GL_TEXTURE1);
+  shader_list[0]->SetDirectionalShadowMap(1);
 
-  spotLights[0].SetAsFlashLight(camera.getPosition(), camera.GetDirection());
+  // spotLights[0].SetAsFlashLight(camera.getPosition(), camera.GetDirection());
 
-  RenderScene(uniform_model, uniform_specular_intensity, uniform_shininess);
+  RenderScene();
 }
 
 int main() {
@@ -424,10 +419,6 @@ int main() {
                                               main_window.GetBufferHeight(),
                                           0.1f, 100.0f);
 
-  GLint uniform_projection = 0, uniform_model = 0, uniform_view = 0,
-        uniform_eye_position = 0, uniform_specular_intensity = 0,
-        uniform_shininess = 0;
-
   // Loop until window closed
   while (!main_window.GetShouldClose()) {
     CalculateDeltaTime();
@@ -439,12 +430,9 @@ int main() {
     camera.MouseControl(main_window.GetMouseXChange(),
                         main_window.GetMouseYChange());
 
-    DirectionalShadowMapPass(&main_light, uniform_specular_intensity,
-                             uniform_shininess);
+    DirectionalShadowMapPass(&main_light);
 
-    RenderPass(projection, camera.CalculateViewMatrix(), uniform_projection,
-               uniform_view, uniform_eye_position, uniform_model,
-               uniform_specular_intensity, uniform_shininess);
+    RenderPass(projection, camera.CalculateViewMatrix());
 
     // RenderScene(uniform_model, uniform_specular_intensity,
     // uniform_shininess);

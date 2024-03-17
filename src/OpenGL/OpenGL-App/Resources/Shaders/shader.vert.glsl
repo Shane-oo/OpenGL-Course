@@ -6,7 +6,7 @@ layout (location = 2) in vec3 norm;
 uniform mat4 model;
 uniform mat4 projection;
 uniform mat4 view;
-uniform mat4 directionalLightSpaceTransform;
+uniform mat4 directionalLightTransform;
 
 out vec4 vCol;
 out vec2 TexCoord;
@@ -17,7 +17,7 @@ out vec4 DirectionalLightSpacePos;
 void main() {
     gl_Position = projection * view * model * vec4(pos, 1.0);
     
-    DirectionalLightSpacePos = directionalLightSpaceTransform * model * vec4(pos, 1.0);
+    DirectionalLightSpacePos = directionalLightTransform * model * vec4(pos, 1.0);
 
     vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0);
 

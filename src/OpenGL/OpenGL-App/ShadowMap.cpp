@@ -20,7 +20,7 @@ ShadowMap::~ShadowMap() {
   }
 }
 
-bool ShadowMap::Init(GLsizei width, GLsizei height) {
+bool ShadowMap::Init(GLuint width, GLuint height) {
   shadowWidth = width;
   shadowHeight = height;
 
@@ -38,8 +38,8 @@ bool ShadowMap::Init(GLsizei width, GLsizei height) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FBO);
-  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
+  glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
                          shadowMap, 0);
 
   // specify not to use colour
@@ -52,10 +52,12 @@ bool ShadowMap::Init(GLsizei width, GLsizei height) {
     return false;
   }
 
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  
   return true;
 }
 
-void ShadowMap::Write() { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FBO); }
+void ShadowMap::Write() { glBindFramebuffer(GL_FRAMEBUFFER, FBO); }
 
 void ShadowMap::Read(GLenum textureUnit) {
   glActiveTexture(textureUnit);

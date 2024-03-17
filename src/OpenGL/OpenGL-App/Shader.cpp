@@ -200,8 +200,8 @@ void Shader::CompileShader(const char *vShader, const char *fShader) {
   }
 
   uniformTexture = glGetUniformLocation(shader_ID, "theTexture");
-  uniformDirectionalLightSpaceTransform =
-      glGetUniformLocation(shader_ID, "directionalLightSpaceTransform");
+  uniformDirectionalLightTransform =
+      glGetUniformLocation(shader_ID, "directionalLightTransform");
   uniformDirectionalShadowMap =
       glGetUniformLocation(shader_ID, "directionalShadowMap");
 }
@@ -213,7 +213,7 @@ Shader::Shader() {
   uniform_view = 0;
 
   uniformTexture = 0;
-  uniformDirectionalLightSpaceTransform = 0;
+  uniformDirectionalLightTransform = 0;
   uniformDirectionalShadowMap = 0;
 
   point_light_count = 0;
@@ -337,14 +337,13 @@ void Shader::ClearShader() {
     i.uniformEdge = 0;
   }
 }
-void Shader::SetTexture(GLint textureUnit) const {
+void Shader::SetTexture(GLint textureUnit) {
   glUniform1i(uniformTexture, textureUnit);
 }
-void Shader::SetDirectionalShadowMap(GLint textureUnit) const {
+void Shader::SetDirectionalShadowMap(GLint textureUnit) {
   glUniform1i(uniformDirectionalShadowMap, textureUnit);
 }
-void Shader::SetDirectionalLightSpaceTransform(
-    glm::mat4 *lightTransform) const {
-  glUniformMatrix4fv(uniformDirectionalLightSpaceTransform, 1, GL_FALSE,
-                     glm::value_ptr(*lightTransform));
+void Shader::SetDirectionalLightSpaceTransform(glm::mat4 lightTransform) {
+  glUniformMatrix4fv(uniformDirectionalLightTransform, 1, GL_FALSE,
+                     glm::value_ptr(lightTransform));
 }

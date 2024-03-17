@@ -6,9 +6,9 @@
 #define OPENGL_MACAPP_LIGHT_H
 
 #include <GL/glew.h>
-#include <glm/detail/type_mat4x4.hpp>
-#include <glm/fwd.hpp>
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <optional>
 
 #include "../ShadowMap.h"
