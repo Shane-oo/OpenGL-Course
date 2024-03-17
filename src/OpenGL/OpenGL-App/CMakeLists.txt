@@ -32,7 +32,9 @@ add_executable (OpenGL-App
         Lights/SpotLight.cpp
         Lights/SpotLight.h
         Model.cpp
-        Model.h)
+        Model.h
+        ShadowMap.cpp
+        ShadowMap.h)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET OpenGL-App PROPERTY CXX_STANDARD 20)

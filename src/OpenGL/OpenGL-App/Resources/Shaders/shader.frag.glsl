@@ -13,7 +13,7 @@ struct DirectionalLight {
     vec3 direction;
 };
 
-struct PointLight{
+struct PointLight {
     Light base;
     vec3 position;
     float constant;
@@ -37,6 +37,7 @@ in vec4 vCol;
 in vec2 TexCoord;
 in vec3 Normal;
 in vec3 FragPosition;
+in vec4 DirectionalLightSpacePos;
 
 uniform int point_light_count;
 uniform int spotLightCount;
@@ -46,14 +47,57 @@ uniform PointLight point_lights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 
-uniform sampler2D Texture;// don't need to setup uniform binding since its just one but if there was more would need to
+uniform sampler2D theTexture;// don't need to setup uniform binding since its just one but if there was more would need to
+uniform sampler2D directionalShadowMap;
+
 uniform Material material;
 
 uniform vec3 eye_position;
 
 out vec4 colour;
 
-vec4 CalcLightByDirection(Light light, vec3 direction){
+float CalcDirectionalShadowFactor(DirectionalLight light) {
+    // -1 to 1 range
+    vec3 projCoords = DirectionalLightSpacePos.xyz / DirectionalLightSpacePos.w;
+    // 0 to 1 range
+    projCoords = (projCoords * 0.5) + 0.5;
+
+    float currentDepth = projCoords.z;
+
+    //vec3 normal = normalize(Normal);
+    //vec3 lightDirection = normalize(light.direction);
+
+    //float bias = max(0.05 * (1.0 - dot(normal, lightDirection)), 0.0005);
+
+    float closest = texture(directionalShadowMap, projCoords.xy).r;
+    
+    float shadow = currentDepth > closest ? 1.0 : 0.0;
+
+/**
+    vec2 texelSize = 1.0 / textureSize(directionalShadowMap, 0);
+    for (int x = -1; x <= 1; ++x) {
+        for (int y = -1; y <= 1; ++y) {
+            
+            float pcfDepth = texture(directionalShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0; // 1 = full shadow, 0 = no shadow
+            
+            
+        }
+    }
+
+    shadow /= 9.0; // x = -1,0,1 y = -1,0,1 => 3*3 = 9
+*/
+
+    if (projCoords.z > 1.0) {
+        shadow = 0.0;
+    }
+
+    return shadow;
+}
+
+
+vec4 CalcLightByDirection(Light light, vec3 direction, float shadowFactor) {
     vec4 ambient_colour = vec4(light.colour, 1.0f) * light.ambient_intensity;
 
     //cos(angle) = A.B
@@ -63,40 +107,42 @@ vec4 CalcLightByDirection(Light light, vec3 direction){
 
     vec4 specular_colour = vec4(0, 0, 0, 0);
 
-    if (diffuse_factor > 0.0f){
+    if (diffuse_factor > 0.0f) {
         vec3 frag_to_eye = normalize(eye_position - FragPosition);//which direction the fragment is to the eye position
         vec3 reflected_vertex = normalize(reflect(normalize(direction), normalize(Normal)));// does direction need to be normalized?
 
         float specular_factor = dot(frag_to_eye, reflected_vertex);
-        if (specular_factor > 0.0f){
+        if (specular_factor > 0.0f) {
             specular_factor = pow(specular_factor, material.shininess);
             specular_colour = vec4(light.colour * material.specular_intensity * specular_factor, 1.0f);
         }
     }
 
-    return (ambient_colour + diffuse_colour + specular_colour);
+    // shadow is only applied to diffuse and specular, ambient always is present
+    return (ambient_colour + (1.0 - shadowFactor) * (diffuse_colour + specular_colour));
 }
 
-vec4 CalcDirectionalLight(){
-    return CalcLightByDirection(directional_light.base, directional_light.direction);
+vec4 CalcDirectionalLight() {
+    float shadowFactor = CalcDirectionalShadowFactor(directional_light);
+    return CalcLightByDirection(directional_light.base, directional_light.direction, shadowFactor);
 }
 
-vec4 CalcPointLight(PointLight pointLight){
+vec4 CalcPointLight(PointLight pointLight) {
     vec3 direction = FragPosition - pointLight.position;// direction of fragment to position of point light
     float distance = length(direction);
 
-    vec4 colour = CalcLightByDirection(pointLight.base, direction);
+    vec4 colour = CalcLightByDirection(pointLight.base, direction, 0.0f);
     // quadratic equation
     float attenuation = (pointLight.exponent * distance * distance) + (pointLight.linear * distance) + pointLight.constant;
 
     return (colour / attenuation);
 }
 
-vec4 CalcSpotLight(SpotLight spotLight){
+vec4 CalcSpotLight(SpotLight spotLight) {
     vec3 rayDirection = normalize(FragPosition - spotLight.pointLight.position);
 
     float spotLightFactor = dot(rayDirection, spotLight.direction);
-    if (spotLightFactor > spotLight.edge){
+    if (spotLightFactor > spotLight.edge) {
         vec4 colour = CalcPointLight(spotLight.pointLight);
 
         // soft edge
@@ -108,26 +154,26 @@ vec4 CalcSpotLight(SpotLight spotLight){
     return vec4(0, 0, 0, 0);
 }
 
-vec4 CalcPointLights(){
+vec4 CalcPointLights() {
     vec4 totalColour = vec4(0.0, 0.0, 0.0, 0);
-    for (int i = 0; i < point_light_count; i++){
+    for (int i = 0; i < point_light_count; i++) {
         totalColour += CalcPointLight(point_lights[i]);
     }
 
     return totalColour;
 }
 
-vec4 CalcSpotLights(){
+vec4 CalcSpotLights() {
     vec4 totalColour = vec4(0, 0, 0, 0);
-    for (int i = 0; i < spotLightCount; i++){
+    for (int i = 0; i < spotLightCount; i++) {
         totalColour += CalcSpotLight(spotLights[i]);
     }
 
     return totalColour;
 }
 
-void main(){
+void main() {
     vec4 final_colour = CalcDirectionalLight() + CalcPointLights() + CalcSpotLights();
 
-    colour = texture(Texture, TexCoord) * final_colour;
+    colour = texture(theTexture, TexCoord) * final_colour;
 }

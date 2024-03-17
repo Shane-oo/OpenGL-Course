@@ -16,10 +16,13 @@ public:
     DirectionalLight();
 
     DirectionalLight(GLfloat red, GLfloat green, GLfloat blue, GLfloat ambient_intensity, GLfloat diffuse_intensity,
-                     GLfloat x_direction, GLfloat y_direction, GLfloat z_direction);
+                     GLfloat x_direction, GLfloat y_direction, GLfloat z_direction,
+                     GLsizei shadowWidth, GLsizei shadowHeight);
 
     void UseDirectionalLight(GLint ambient_intensity_location, GLint ambient_colour_location,
                              GLint diffuse_intensity_location, GLint direction_location);
+    
+    glm::mat4 CalculateLightTransform();
 };
 
 
