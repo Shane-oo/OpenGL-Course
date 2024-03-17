@@ -204,8 +204,8 @@ void CreateLights() {
   GLfloat diffuse_intensity = 0.3f;
 
   GLfloat x_direction = 0.0f;
-  GLfloat y_direction = -7.0f;
-  GLfloat z_direction = -1.0f;
+  GLfloat y_direction = -15.0f;
+  GLfloat z_direction = -10.0f;
 
   main_light =
       DirectionalLight(red, green, blue, ambient_intensity, diffuse_intensity,
