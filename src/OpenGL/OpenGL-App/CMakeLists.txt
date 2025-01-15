@@ -8,8 +8,7 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources DESTINATION ${CMAKE_CURRENT_BINA
 
 
 # Add source to this project's executable.
-add_executable (OpenGL-App    
-        main.cpp    
+add_executable (OpenGL-App  "main.cpp"
         Mesh.cpp
         Mesh.h
         Shader.cpp
@@ -46,7 +45,6 @@ find_package(glfw3 REQUIRED)
 # Find GLEW package
 # https://stackoverflow.com/questions/27472813/linking-glew-with-cmake
 find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIRS})
 
 # Find GLM package
 find_package(glm REQUIRED)

@@ -1,0 +1,9 @@
+{
+  "name" : "opengl-course",
+  "version" : "1.0.0",
+  "dependencies" : [ "glfw3", "glm", "glew", {
+    "name" : "imgui",
+    "default-features" : false,
+    "features" : [ "glfw-binding", "vulkan-binding" ]
+  }, "openimageio", "tinyobjloader", "tinygltf", "assimp" ]
+}

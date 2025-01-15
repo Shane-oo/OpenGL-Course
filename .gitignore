@@ -14,3 +14,7 @@ src/OpenGL/.vs/
 src/OpenGL/out/build/x64-debug/
 src/OpenGL/OpenGL-App/cmake-build-debug/
 src/OpenGL/cmake-build-debug/
+src/OpenGL/vcpkg_installed/
+src/OpenGL/CMakeFiles/
+src/OpenGL/out/build/linux-debug/
+src/OpenGL/out/build/linux-release/

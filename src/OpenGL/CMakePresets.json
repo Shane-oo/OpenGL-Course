@@ -2,6 +2,27 @@
   "version": 3,
   "configurePresets": [
     {
+      "name": "vcpkg-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "PATH",
+          "value": "/home/shane/Documents/repos/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        }
+      }
+    },
+    {
+      "name": "linux-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "/usr/bin/gcc",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++"
+      }
+    },
+    {
       "name": "windows-base",
       "hidden": true,
       "generator": "Ninja",
@@ -20,17 +41,13 @@
     {
       "name": "x64-debug",
       "displayName": "x64 Debug",
-      "inherits": "windows-base",
+      "inherits": ["windows-base","vcpkg-base"],
       "architecture": {
         "value": "x64",
         "strategy": "external"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "PATH",
-          "value": "E:/Programs/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        }
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
@@ -38,39 +55,28 @@
       "displayName": "x64 Release",
       "inherits": "x64-debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "PATH",
-          "value": "E:/Programs/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        }
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
+      "name": "linux-debug",
+      "displayName": "Linux Debug",
+      "inherits": ["linux-base","vcpkg-base"],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
       },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "PATH",
-          "value": "E:/Programs/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        }
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
       }
     },
     {
-      "name": "x86-release",
-      "displayName": "x86 Release",
-      "inherits": "x86-debug",
+      "name": "linux-release",
+      "displayName": "Linux Release",
+      "inherits": "linux-debug",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "PATH",
-          "value": "E:/Programs/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        }
+        "CMAKE_BUILD_TYPE": "Release"
       }
     }
   ]
